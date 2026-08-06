@@ -1,3 +1,6 @@
+https://florianalternativ-cmyk.github.io/IT-Gamev2/
+
+
 # IT-SURVIVAL — Mobile Edition V2
 
 Diese Version ist konsequent für Smartphones im Hochformat gebaut. Die veröffentlichte `index.html` ist vollständig selbstständig: CSS, Pixel-Art und JavaScript sind direkt eingebettet. Dadurch kann das Spiel nicht mehr wegen fehlender oder veralteter `style.css`-/JavaScript-Dateien auf der Startseite hängen bleiben.
