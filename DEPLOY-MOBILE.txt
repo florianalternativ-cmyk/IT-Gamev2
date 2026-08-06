@@ -1,0 +1,21 @@
+IT-SURVIVAL MOBILE V2 — GITHUB PAGES
+
+SCHNELLSTE VARIANTE
+1. Die neue index.html herunterladen.
+2. Im GitHub-Pages-Repository die alte index.html im Hauptverzeichnis ersetzen.
+3. Committen und kurz auf das Deployment warten.
+4. https://alternativ-cmyk.github.io/?v=mobile-v2 öffnen.
+
+ZIP-VARIANTE
+- ZIP entpacken.
+- Die DATEIEN direkt in das Repository-Hauptverzeichnis hochladen.
+- Nicht den gesamten entpackten Ordner als Unterordner hochladen.
+
+ERKENNUNGSZEICHEN DER NEUEN VERSION
+- Button: „TIPPE ZUM STARTEN“
+- Terminal: touch.ready = true
+- Das Spiel erscheint als schmale Hochformat-App.
+
+Wenn die alte unformatierte Seite erscheint:
+- GitHub Pages Branch und Root-Ordner prüfen.
+- Inkognito-Modus oder ?v=mobile-v2 verwenden.
