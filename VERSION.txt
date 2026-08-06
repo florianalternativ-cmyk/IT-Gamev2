@@ -1,0 +1,6 @@
+IT-SURVIVAL Mobile Edition V3
+Build: mobile-v3-2026-08-06
+Target: neues GitHub-Pages-Repository
+Distribution: selbstständige index.html
+Kaffee: 1 Punkt / 6 Sekunden, Dialogpause
+Ticket-Wartezeit: variabel 3–8 Sekunden
