@@ -94,6 +94,9 @@
   let activeGameCleanup = null;
   let dialogue = null;
   let dialogueTypingTimer = null;
+  let nextWorkTimer = null;
+  let nextWorkDeadline = 0;
+  const COFFEE_DRAIN_MS = 6000;
 
   function later(fn, ms) {
     const id = setTimeout(() => { transientTimers.delete(id); fn(); }, ms);
@@ -105,6 +108,8 @@
     globalIntervals = [];
     transientTimers.forEach(id => { clearTimeout(id); clearInterval(id); });
     transientTimers.clear();
+    nextWorkTimer = null;
+    nextWorkDeadline = 0;
     clearInterval(dialogueTypingTimer);
     dialogueTypingTimer = null;
   }
@@ -140,7 +145,7 @@
     ui.questCounter.textContent = `${solvedCount()}/${Story.totalQuestIds.length} GELÖST`;
   }
   function updateMuteButtons() {
-    const icon = Audio.muted ? "🔇" : "🔊";
+    const icon = Audio.muted ? "SFX×" : "SFX";
     const label = Audio.muted ? "Ton einschalten" : "Ton ausschalten";
     [ui.startMute,ui.hudMute].forEach(button => { button.textContent=icon; button.title=label; button.setAttribute("aria-label",label); });
   }
@@ -237,6 +242,47 @@
     return [["server",Story.coreEvents.server],["coffee",Story.coreEvents.coffee],["boss",Story.coreEvents.printer]]
       .find(([flag,quest])=>!state.eventFlags[flag]&&state.time>=quest.releaseAt)||null;
   }
+  function cancelNextWork() {
+    if (!nextWorkTimer) return;
+    clearTimeout(nextWorkTimer);
+    transientTimers.delete(nextWorkTimer);
+    nextWorkTimer = null;
+    nextWorkDeadline = 0;
+  }
+  function nextWorkCandidate() {
+    const regular = [...Story.quests]
+      .filter(quest => !state.released[quest.id] && !state.completed[quest.id] && (!quest.unlockAfter || state.completed[quest.unlockAfter]))
+      .map(quest => ({ flag:null, quest }));
+    const fixed = [["server",Story.coreEvents.server],["coffee",Story.coreEvents.coffee],["boss",Story.coreEvents.printer]]
+      .filter(([flag]) => !state.eventFlags[flag])
+      .map(([flag,quest]) => ({ flag, quest }));
+    return [...regular,...fixed].sort((a,b)=>a.quest.order-b.quest.order)[0] || null;
+  }
+  function deliverNextWork() {
+    nextWorkTimer = null;
+    nextWorkDeadline = 0;
+    if (state.mode!=="board" || state.ending || state.active.length || state.backlog.length) return;
+    const item = nextWorkCandidate();
+    if (!item) return;
+    if (state.time < item.quest.releaseAt) state.time = item.quest.releaseAt;
+    updateHud();
+    if (item.flag) { startMandatory(item.flag,item.quest); return; }
+    dispatchQuest(item.quest);
+    renderBoard();
+  }
+  function scheduleNextWork() {
+    if (nextWorkTimer || state.mode!=="board" || state.ending || state.active.length || state.backlog.length) return;
+    if (!nextWorkCandidate()) return;
+    const delay = 3000 + Math.floor(Math.random()*5001);
+    nextWorkDeadline = Date.now()+delay;
+    nextWorkTimer = later(deliverNextWork,delay);
+    const status = $("#next-ticket-status",ui.stage);
+    if (status) status.textContent = `AUTO · ${Math.ceil(delay/1000)} SEK MAX.`;
+  }
+  function forceNextWork() {
+    cancelNextWork();
+    deliverNextWork();
+  }
   function checkSchedule(){
     if(state.mode!=="board"||state.ending)return{interrupted:false,changed:false};
     const mandatory=nextMandatory();
@@ -266,12 +312,13 @@
     const segment=Math.max(0,Math.min(7,Math.floor((state.time-540)/60)));
     const moodIds=["kevin","jana","kalk","mogel","root","kaffemat"];
     const logs=state.logs.slice(-7).map((line,i,a)=>`<p class="${i<a.length-3?"dim":""}"><b>&gt;</b> ${line}</p>`).join("");
-    const empty=`<div class="empty-queue"><div><div class="radar"></div><b>POSTEINGANG RUHIG</b><p>Das ist verdächtiger als drei offene Tickets.</p></div></div>`;
+    const empty=`<div class="empty-queue"><div><div class="queue-pulse"></div><b>LEITUNG FREI</b><p>Die nächste Anfrage wird in wenigen Sekunden verbunden.</p></div></div>`;
+    const idleControl=!state.active.length?`<button id="idle-skip" class="secondary-button idle-button wait-button" type="button">NÄCHSTES TICKET JETZT <small id="next-ticket-status">AUTO · MAX. 8 SEK.</small></button>`:"";
     ui.stage.innerHTML=`<section class="board-screen">
       <div class="ticket-column">
-        <div class="board-heading"><div><h2>NERDPHONE · ANFRAGEN</h2><p>Maximal 3 sichtbar. Du bestimmst die Reihenfolge – und trägst die Folgen.</p></div><span class="queue-chip">${state.active.length}/3 AKTIV · ${state.backlog.length} WARTEND</span></div>
+        <div class="board-heading"><div><h2>TICKET-EINGANG</h2><p>Maximal 3 sichtbar. Reihenfolge und Reaktionszeit liegen bei dir.</p></div><span class="queue-chip">${state.active.length}/3 AKTIV · ${state.backlog.length} WARTEND</span></div>
         <div class="ticket-list">${cards||empty}</div>
-        <button id="idle-skip" class="secondary-button idle-button" type="button">▸ 10 MINUTEN LOGS BEOBACHTEN <small>(Tickets altern)</small></button>
+        ${idleControl}
       </div>
       <aside class="side-column">
         <section class="side-card timeline"><div class="side-card-header"><span>SCHICHTVERLAUF</span><span data-board-time>${formatTime(state.time)}</span></div><div class="timeline-track">${Array.from({length:8},(_,i)=>`<i data-time-segment="${i}" class="${i<segment?"passed":i===segment?"current":""}"></i>`).join("")}</div><div class="timeline-labels"><span>09</span><span>11</span><span>13</span><span>15</span><span>17</span></div></section>
@@ -280,7 +327,7 @@
       </aside>
     </section>`;
     $$('[data-accept]',ui.stage).forEach(button=>button.addEventListener("click",()=>acceptQuest(button.dataset.accept),{once:true}));
-    $("#idle-skip",ui.stage)?.addEventListener("click",()=>{state.stats.idleSkips+=1;addLog("du: 10 minuten professionell auf logs geschaut.");changeCoffee(-2);if(!state.ending)advanceTime(10);},{once:true});
+    $("#idle-skip",ui.stage)?.addEventListener("click",()=>{state.stats.idleSkips+=1;addLog("du: nächste leitung manuell angenommen.");forceNextWork();},{once:true});
     state.active.forEach(ensureTicketTyping); Characters.renderAll(ui.stage);
   }
   function advanceTime(minutes){
@@ -296,7 +343,7 @@
     globalIntervals.forEach(clearInterval);
     globalIntervals=[
       setInterval(()=>{if(state.activeRun&&state.mode==="board"&&!state.ending)advanceTime(1);},2000),
-      setInterval(()=>{if(state.activeRun&&!state.ending&&!['start','ending'].includes(state.mode))changeCoffee(-1);},2000)
+      setInterval(()=>{if(state.activeRun&&!state.ending&&['board','minigame'].includes(state.mode))changeCoffee(-1);},COFFEE_DRAIN_MS)
     ];
   }
 
@@ -332,6 +379,7 @@
   function enterBoard(){
     if(state.ending)return;state.mode="board";state.currentQuest=null;
     const scheduled=checkSchedule();if(!scheduled.interrupted)renderBoard();updateHud();
+    if(!scheduled.interrupted)scheduleNextWork();
   }
   function acceptQuest(id){
     if(state.mode!=="board"||state.ending||!state.active.includes(id))return;
@@ -342,10 +390,11 @@
   }
   function startMandatory(flag,quest){
     if(state.ending||state.eventFlags[flag])return;
+    cancelNextWork();
     state.eventFlags[flag]=true;state.released[quest.id]=true;state.currentQuest=quest.id;
-    if(flag==="server"){addLog("ALARM: prod-01 antwortet nur noch in ERRORs.");toast("⚠ PFLICHT-EVENT: SERVER-ALARM","bad");Audio.play("bad");}
-    else if(flag==="coffee"){addLog("kaffemat3000: ICH HABE GETRÄUMT.");toast("☕ KAFFEMAT 3000 fordert Wartung","warn");Audio.play("message");}
-    else{addLog("drucko5000: PC LOAD LETTER.");toast("🖨 16:45 · DRUCKO 5000 ERWACHT","bad");Audio.play("boss");}
+    if(flag==="server"){addLog("ALARM: prod-01 antwortet nur noch in ERRORs.");toast("[ALARM] SERVER-AUSFALL","bad");Audio.play("bad");}
+    else if(flag==="coffee"){addLog("kaffemat3000: ICH HABE GETRÄUMT.");toast("KAFFEMAT 3000 · WARTUNG","warn");Audio.play("message");}
+    else{addLog("drucko5000: PC LOAD LETTER.");toast("16:45 · DRUCKO 5000 ONLINE","bad");Audio.play("boss");}
     showDialogue(quest.intro,()=>runMinigame(quest));
   }
 
@@ -392,17 +441,17 @@
 
   /* ---------- Endings ---------- */
   function rankForPatience(){
-    if(state.patience>80)return{title:"ROOT-GOTT 👑",copy:"Du hast nicht nur überlebt – du hast das Büro administriert, ohne sichtbar zu weinen.",stamp:"ROOT-GOTT"};
-    if(state.patience>40)return{title:"SYSADMIN 🖥",copy:"Der Betrieb läuft. Niemand weiß genau warum. Das ist professionelle IT.",stamp:"ÜBERLEBT"};
-    return{title:"MAUS-SCHUBSER 🐭",copy:"Der Tag ist geschafft. Chef Brumm auch. Morgen bitte weniger Rauch.",stamp:"KNAPP ÜBERLEBT"};
+    if(state.patience>80)return{title:"ROOT-GOTT",copy:"Du hast nicht nur überlebt – du hast das Büro administriert, ohne sichtbar zu weinen.",stamp:"ROOT-GOTT"};
+    if(state.patience>40)return{title:"SYSADMIN",copy:"Der Betrieb läuft. Niemand weiß genau warum. Das ist professionelle IT.",stamp:"ÜBERLEBT"};
+    return{title:"MAUS-SCHUBSER",copy:"Der Tag ist geschafft. Chef Brumm auch. Morgen bitte weniger Rauch.",stamp:"KNAPP ÜBERLEBT"};
   }
   function endingData(reason){
-    if(reason==="fired")return{title:"GEFEUERT 📦",copy:"Chef Brumm hat genug. Dein Firmenkonto wurde schneller deaktiviert als Mogels Antivirus.",stamp:"VERTRAG BEENDET",kind:"bad"};
-    if(reason==="asleep")return{title:"EINGESCHLAFEN 😴",copy:"Zu wenig Koffein. Du wachst unter dem Schreibtisch auf. Root nennt es Energiesparmodus.",stamp:"KAFFEE 0%",kind:"bad"};
+    if(reason==="fired")return{title:"GEFEUERT",copy:"Chef Brumm hat genug. Dein Firmenkonto wurde schneller deaktiviert als Mogels Antivirus.",stamp:"VERTRAG BEENDET",kind:"bad"};
+    if(reason==="asleep")return{title:"EINGESCHLAFEN",copy:"Zu wenig Koffein. Du wachst unter dem Schreibtisch auf. Root nennt es Energiesparmodus.",stamp:"KAFFEE 0%",kind:"bad"};
     const allSuccess=Story.totalQuestIds.every(id=>state.completed[id]?.success);
     const happy=Story.promotionMoodIds.every(id=>moodFor(id)==="happy");
-    if(allSuccess&&happy)return{title:"BEFÖRDERUNG 🏆",copy:"Alle Tickets gelöst, alle Kolleg:innen zufrieden. Chef Brumm befördert dich zur gesamten IT-Abteilung – diesmal offiziell.",stamp:"BEFÖRDERT",kind:"good"};
-    if(state.kaffematPerfect)return{title:"KAFFEMAT 3000 ÜBERNIMMT ☕🤖",copy:"Perfekte Extraktion aktiviert BARISTA-OMEGA. KAFFEMAT übernimmt die Geschäftsführung. Erster Beschluss: kostenlose Doppel-Espressi.",stamp:"NEUE LEITUNG",kind:"secret"};
+    if(allSuccess&&happy)return{title:"BEFÖRDERUNG",copy:"Alle Tickets gelöst, alle Kolleg:innen zufrieden. Chef Brumm befördert dich zur gesamten IT-Abteilung – diesmal offiziell.",stamp:"BEFÖRDERT",kind:"good"};
+    if(state.kaffematPerfect)return{title:"KAFFEMAT 3000 ÜBERNIMMT",copy:"Perfekte Extraktion aktiviert BARISTA-OMEGA. KAFFEMAT übernimmt die Geschäftsführung. Erster Beschluss: kostenlose Doppel-Espressi.",stamp:"NEUE LEITUNG",kind:"secret"};
     return{...rankForPatience(),kind:"normal"};
   }
   function endDay(reason){
@@ -430,7 +479,7 @@
   }
   function startGame(){
     resetState();Audio.init();ui.start.hidden=true;ui.end.hidden=true;ui.shell.hidden=false;state.mode="dialogue";updateHud();
-    ui.stage.innerHTML=`<div class="empty-queue" style="height:100%;border:0"><div><div class="radar"></div><b>NERDDESK WIRD GESTARTET…</b></div></div>`;
+    ui.stage.innerHTML=`<div class="empty-queue" style="height:100%;border:0"><div><div class="radar"></div><b>HELPDESK WIRD GESTARTET…</b></div></div>`;
     showDialogue(Story.opening,()=>{state.time=545;state.activeRun=true;startTimers();enterBoard();});
   }
   function showStart(){resetState();state.mode="start";ui.start.hidden=false;ui.shell.hidden=true;ui.end.hidden=true;Characters.renderAll(ui.start);}

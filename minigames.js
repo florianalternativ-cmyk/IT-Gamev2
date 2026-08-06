@@ -166,7 +166,7 @@
           } else {
             session.api.penalty(10, "Kevin bekam gefährliches Halbwissen");
             button.classList.add("wrong");
-            setMessage(session.root, "Sicher? 🤨 Fachlich wackelig.", "bad");
+            setMessage(session.root, "Fachlich wackelig. Kevin schreibt trotzdem mit.", "bad");
           }
           session.later(() => {
             index += 1;
@@ -184,24 +184,28 @@
     let entered = 0;
     let errors = 0;
     let accepting = false;
-    let timeoutId;
 
     session.root.innerHTML = `
       <p class="game-instruction">${session.quest.instruction}</p>
       <div class="simon-layout">
         <div class="router" aria-label="Router mit vier Leuchttasten">
-          <div class="router-top"><span>ACME ROUTER 4B</span><span id="router-state">BOOT...</span></div>
+          <div class="router-top"><span class="router-model"><b>ACME ROUTER 4B</b><small>LED DIAGNOSTIC CONSOLE</small></span><span id="router-state" class="router-state">BEREIT</span></div>
           <div class="led-row">
             ${[0,1,2,3].map((i) => `<button class="router-led" data-led="${i}" data-color="${i}" type="button" aria-label="LED ${i+1}"></button>`).join("")}
           </div>
           <div class="router-labels"><span>WAN</span><span>2.4G</span><span>5G</span><span>GAST</span></div>
         </div>
-        <div class="game-message">Zuerst beobachten, dann nachtippen.</div>
+        <div class="router-controls">
+          <button id="start-sequence" class="primary-button" type="button">SIGNALTEST STARTEN</button>
+          <div class="sequence-note">Erst starten, wenn du bereit bist. Danach fünf Signale in gleicher Reihenfolge wiederholen.</div>
+        </div>
+        <div class="game-message">Lies die Aufgabe in Ruhe. Der Test beginnt erst nach deinem Tippen.</div>
       </div>`;
     const leds = [...session.root.querySelectorAll("[data-led]")];
     const stateLabel = session.root.querySelector("#router-state");
+    const startButton = session.root.querySelector("#start-sequence");
 
-    function light(i, duration = 330) {
+    function light(i, duration = 430) {
       leds[i].classList.add("on");
       session.api.sound("tick", 220 + i * 70);
       session.later(() => leds[i]?.classList.remove("on"), duration);
@@ -211,16 +215,28 @@
       entered = 0;
       stateLabel.textContent = "MERKEN";
       session.api.setStatus("ZUSCHAUEN");
-      setMessage(session.root, "Der Router spricht fließend Blink.");
-      sequence.forEach((value, i) => session.later(() => light(value), 520 + i * 520));
+      setMessage(session.root, "Fünf Signale. Noch nicht tippen.");
+      sequence.forEach((value, i) => session.later(() => light(value), 420 + i * 650));
       session.later(() => {
         accepting = true;
         stateLabel.textContent = "EINGABE";
-        session.api.setStatus(`${entered}/${sequence.length}`);
+        session.api.setStatus(`0/${sequence.length}`);
         setMessage(session.root, "Jetzt dieselbe Reihenfolge tippen.", "good");
-      }, 520 + sequence.length * 520);
+      }, 420 + sequence.length * 650 + 420);
+    }
+    function beginRound() {
+      if (startButton.disabled || accepting) return;
+      startButton.disabled = true;
+      startButton.hidden = true;
+      stateLabel.textContent = "START 3";
+      session.api.setStatus("START IN 3");
+      setMessage(session.root, "Bereitmachen: 3 … 2 … 1 …");
+      session.later(() => { stateLabel.textContent="START 2"; session.api.setStatus("START IN 2"); },700);
+      session.later(() => { stateLabel.textContent="START 1"; session.api.setStatus("START IN 1"); },1400);
+      session.later(playSequence,2200);
     }
 
+    session.on(startButton,"click",beginRound);
     leds.forEach((led) => {
       session.on(led, "click", () => {
         if (!accepting) return;
@@ -239,121 +255,89 @@
           accepting = false;
           session.api.penalty(10, "Falsche Router-Sequenz");
           stateLabel.textContent = "FEHLER";
-          setMessage(session.root, `Falsches Licht. Versuch ${errors}/3.`, "bad");
-          if (errors >= 3) session.later(() => session.finish(false, { errors }), 650);
-          else session.later(playSequence, 900);
+          setMessage(session.root, `Falsches Signal. Versuch ${errors}/3. Du startest die Wiederholung selbst.`, "bad");
+          if (errors >= 3) session.later(() => session.finish(false, { errors }), 700);
+          else {
+            startButton.textContent = "SEQUENZ NOCHMAL ZEIGEN";
+            startButton.hidden = false;
+            startButton.disabled = false;
+          }
         }
       });
     });
-    timeoutId = session.later(() => session.finish(false, { reason: "timeout", errors }), 38000);
-    session.addCleanup(() => window.clearTimeout(timeoutId));
-    playSequence();
+    session.later(() => session.finish(false, { reason:"timeout", errors }), 90000);
   }
 
   function hdmi(session) {
     let flips = 0;
-    let dragOrigin = null;
     let dragStart = null;
 
     session.root.innerHTML = `
       <p class="game-instruction">${session.quest.instruction}</p>
-      <div class="pc-workbench">
-        <div class="pc-back" aria-label="Rückseite eines Desktop-PCs">
-          <div class="psu"><div class="fan" aria-hidden="true"></div></div>
-          <div class="io-panel">
-            <div class="port usb" data-port="usb">USB</div>
+      <div class="pc-workbench hardware-workbench">
+        <div class="pc-back hardware-back" aria-label="Detaillierte Rückseite eines Desktop-PCs">
+          <span class="case-screw screw-a"></span><span class="case-screw screw-b"></span><span class="case-screw screw-c"></span><span class="case-screw screw-d"></span>
+          <div class="case-id"><span>ACME WS-24</span><span>REAR I/O · REV C</span></div>
+          <div class="psu-block"><div class="iec-socket"></div><div class="psu-switch">I/O</div><div class="fan-grill"><i class="fan-hub"></i></div><span class="psu-label">650 W · 100–240 V</span></div>
+          <div class="io-shield">
+            <div class="port usb" data-port="usb">USB 2</div>
             <div class="port lan" data-port="lan">LAN</div>
-            <div class="port hdmi trap" data-port="mainboard-hdmi">HDMI</div>
+            <div class="port hdmi trap" data-port="mainboard-hdmi">MB HDMI</div>
+            <div class="port usb" data-port="usb">USB 3</div>
+            <div class="port audio" data-port="audio">AUX</div>
             <div class="port vga" data-port="vga">VGA</div>
-            <div class="port audio" data-port="audio">●</div>
-            <div class="port usb" data-port="usb">USB</div>
+            <span class="io-caption">MAINBOARD I/O — OHNE AKTIVE iGPU</span>
           </div>
-          <div class="slot-lines" aria-hidden="true"></div>
+          <div class="expansion-bank"><div class="blank-slot"></div><div class="blank-slot"></div><div class="blank-slot"></div><div class="blank-slot"></div><div class="blank-slot"></div><span class="slot-note">PCIe EXPANSION</span></div>
           <div class="gpu-panel">
-            <span class="pixel-tag">GPU</span>
-            <div class="port hdmi" data-port="gpu-hdmi">HDMI</div>
-            <div class="port dp" data-port="displayport">DP</div>
-            <div class="port dp" data-port="displayport">DP</div>
+            <span class="gpu-label"><b>GPU-01</b><small>DEDICATED DISPLAY OUTPUTS</small></span>
+            <div class="port hdmi target-port" data-port="gpu-hdmi">HDMI</div>
+            <div class="port dp" data-port="displayport">DP-1</div>
+            <div class="port dp" data-port="displayport">DP-2</div>
           </div>
         </div>
-        <div class="cable-zone">
-          <div id="hdmi-cable" class="cable" role="button" tabindex="0" aria-label="HDMI-Stecker ziehen">HDMI</div>
-          <button id="flip-hdmi" class="secondary-button flip-button" type="button">↻ STECKER DREHEN</button>
-          <span class="flip-counter">Drehungen: <b id="flip-count">0</b> / 2+</span>
-          <div class="game-message">Root: „der port weiter unten. wirklich.“</div>
+        <div class="cable-zone hardware-cable-zone">
+          <div class="connector-card">
+            <div class="connector-spec"><b>HDMI TYPE-A</b><span>19 PIN</span></div>
+            <div id="hdmi-cable" class="cable detailed-hdmi" role="button" tabindex="0" aria-label="HDMI-Stecker ziehen"><i class="metal-shell"></i><i class="pin-bank"></i><span class="plug-label">MONITOR CABLE</span></div>
+            <div class="orientation-readout">AUSRICHTUNG: <b id="hdmi-orientation">KONTAKTE UNTEN</b></div>
+          </div>
+          <button id="flip-hdmi" class="secondary-button flip-button" type="button">STECKER DREHEN</button>
+          <div class="game-message">Tipp: Der Monitor gehört an die dedizierte Grafikkarte, nicht an das Mainboard.</div>
         </div>
       </div>`;
 
     const cable = session.root.querySelector("#hdmi-cable");
     const ports = [...session.root.querySelectorAll("[data-port]")];
-    const flipCount = session.root.querySelector("#flip-count");
-
-    function updateCableTransform(dx = 0, dy = 0) {
-      cable.style.transform = `translate(${dx}px, ${dy}px) rotate(${flips % 2 ? 180 : 0}deg)`;
-    }
+    const orientation = session.root.querySelector("#hdmi-orientation");
+    function correctlyOriented(){ return flips % 2 === 1; }
+    function updateCableTransform(dx = 0, dy = 0) { cable.style.transform = `translate(${dx}px, ${dy}px) rotate(${flips % 2 ? 180 : 0}deg)`; }
     function flip() {
       flips += 1;
-      flipCount.textContent = flips;
+      orientation.textContent = correctlyOriented()?"KONTAKTE OBEN · OK":"KONTAKTE UNTEN";
       updateCableTransform();
-      session.api.sound("tick", 180 + flips * 25);
-      setMessage(session.root, flips >= 2 ? "Orientierung plausibel. Jetzt zur Grafikkarte ziehen." : "Einmal gedreht. USB-Logik sagt: noch einmal.", flips >= 2 ? "good" : "");
+      session.api.sound("tick", 180 + flips * 20);
+      setMessage(session.root, correctlyOriented()?"Ausrichtung passt. Jetzt GPU-HDMI wählen oder hineinziehen.":"Stecker wieder verkehrt herum.", correctlyOriented()?"good":"");
     }
-    session.on(session.root.querySelector("#flip-hdmi"), "click", flip);
-    session.on(cable, "keydown", (event) => { if (event.key === "r") flip(); });
-
-    bindDrag(session, cable, {
-      start(point) {
-        dragOrigin = cable.getBoundingClientRect();
-        dragStart = point;
-        cable.classList.add("dragging");
-        session.api.sound("tick", 150);
-      },
-      move(point) {
-        const dx = point.x - dragStart.x;
-        const dy = point.y - dragStart.y;
-        updateCableTransform(dx, dy);
-        ports.forEach((port) => {
-          const r = port.getBoundingClientRect();
-          const distance = Math.hypot(point.x - (r.left+r.width/2), point.y - (r.top+r.height/2));
-          port.classList.toggle("near", distance < 72);
-        });
-      },
-      end(point) {
-        cable.classList.remove("dragging");
-        ports.forEach((p) => p.classList.remove("near"));
-        cable.style.pointerEvents = "none";
-        const target = document.elementFromPoint(point.x, point.y)?.closest?.("[data-port]");
-        cable.style.pointerEvents = "";
-        updateCableTransform();
-        if (!target) {
-          setMessage(session.root, "Der Stecker hängt jetzt philosophisch im Raum.");
-          return;
-        }
-        const port = target.dataset.port;
-        if (port === "gpu-hdmi") {
-          if (flips >= 2) {
-            target.classList.add("near");
-            setMessage(session.root, "KLICK. Bildsignal an der dedizierten GPU!", "good");
-            session.api.sound("good");
-            session.later(() => session.finish(true, { flips }), 550);
-          } else {
-            session.api.penalty(5, "HDMI-Stecker falsch orientiert");
-            setMessage(session.root, "Fast. Der Stecker schaut noch in die falsche Realität.", "bad");
-          }
-          return;
-        }
-        const responses = {
-          "mainboard-hdmi": [15, "Mainboard-HDMI: Die Falle schnappt zu. Kein Bild."],
-          displayport: [10, "DisplayPort ist HDMI mit anderer Frisur. Passt trotzdem nicht."],
-          vga: [10, "VGA stammt aus einer Zeit, in der Pixel noch Grundstücke waren."],
-          usb: [10, "HDMI in USB: mutig, aber geometrisch schwierig."],
-          lan: [10, "Das Internet braucht kein HDMI-Kabel."],
-          audio: [10, "Der Monitor soll Bild, nicht Jazz bekommen."]
-        };
-        const [penalty, text] = responses[port] || [10, "Falscher Port."];
-        session.api.penalty(penalty, text);
-        setMessage(session.root, text, "bad");
+    function tryPort(target){
+      if(!target) return setMessage(session.root,"Kein Anschluss getroffen.");
+      const port=target.dataset.port;
+      if(port==="gpu-hdmi"){
+        if(correctlyOriented()){
+          target.classList.add("near");setMessage(session.root,"KLICK. HDMI sitzt in der Grafikkarte; Bildsignal steht.","good");session.api.sound("good");session.later(()=>session.finish(true,{flips}),550);
+        }else{session.api.penalty(5,"HDMI-Stecker falsch orientiert");setMessage(session.root,"Richtiger Port, aber die Kontaktseite zeigt falsch.","bad");}
+        return;
       }
+      const responses={"mainboard-hdmi":[15,"Mainboard-HDMI liefert ohne aktive iGPU kein Bild."],displayport:[8,"Das ist DisplayPort; die Steckerform passt nicht."],vga:[8,"VGA ist analog und kein Ziel für diesen Stecker."],usb:[8,"USB-A und HDMI haben unterschiedliche Geometrie."],lan:[8,"RJ45 ist der Netzwerkanschluss."],audio:[8,"3,5-mm-Audio überträgt hier kein Bild."]};
+      const [penalty,text]=responses[port]||[8,"Falscher Anschluss."];session.api.penalty(penalty,text);setMessage(session.root,text,"bad");
+    }
+    session.on(session.root.querySelector("#flip-hdmi"),"click",flip);
+    session.on(cable,"keydown",event=>{if(event.key==="r")flip();});
+    ports.forEach(port=>session.on(port,"click",()=>tryPort(port)));
+    bindDrag(session,cable,{
+      start(point){dragStart=point;cable.classList.add("dragging");session.api.sound("tick",150);},
+      move(point){updateCableTransform(point.x-dragStart.x,point.y-dragStart.y);ports.forEach(port=>{const r=port.getBoundingClientRect();port.classList.toggle("near",Math.hypot(point.x-(r.left+r.width/2),point.y-(r.top+r.height/2))<68);});},
+      end(point){cable.classList.remove("dragging");ports.forEach(p=>p.classList.remove("near"));cable.style.pointerEvents="none";const target=document.elementFromPoint(point.x,point.y)?.closest?.("[data-port]");cable.style.pointerEvents="";updateCableTransform();tryPort(target);}
     });
   }
 
@@ -362,58 +346,45 @@
     let startPoint;
     session.root.innerHTML = `
       <p class="game-instruction">${session.quest.instruction}</p>
-      <div class="usb-bench">
-        <div>
-          <div id="usb-plug" class="usb-plug upside" role="button" tabindex="0" aria-label="USB-Stecker ziehen">USB</div>
-          <button id="rotate-usb" class="secondary-button idle-button" type="button">↻ USB DREHEN</button>
-          <div class="game-message">Aktuelle Orientierung: klassisch falsch.</div>
+      <div class="usb-bench hardware-bench">
+        <div class="device-card">
+          <div class="device-label"><span>ACME OPTICAL MOUSE</span><span>USB-A · 5 V</span></div>
+          <div class="mouse-unit"><i class="mouse-led"></i></div>
+          <div id="usb-plug" class="usb-plug detailed-usb upside" role="button" tabindex="0" aria-label="USB-A-Stecker ziehen"><i class="usb-contact-row"></i><span class="usb-mark">USB TYPE-A</span></div>
+          <button id="rotate-usb" class="secondary-button idle-button" type="button">STECKER DREHEN</button>
+          <div class="game-message">Ausrichtung: Kontaktzunge unten. Einmal drehen.</div>
         </div>
-        <div class="usb-tower">
-          <div class="usb-target" data-usb="audio">KOPFHÖRER</div>
-          <div class="usb-target correct" data-usb="usb-blue">USB 3.0</div>
-          <div class="usb-target" data-usb="lan">LAN</div>
-          <div class="usb-target" data-usb="display">DISPLAY</div>
+        <div class="usb-tower hardware-tower">
+          <div class="tower-label">ACME MINI-TOWER · FRONT I/O</div><div class="power-key"></div>
+          <div class="front-io">
+            <div class="usb-target audio" data-usb="audio">HEADSET<span class="port-meta">3,5 MM AUDIO</span></div>
+            <div class="usb-target correct" data-usb="usb-blue">USB 3.0<span class="port-meta">TYPE-A · SUPER SPEED</span></div>
+            <div class="usb-target type-c" data-usb="display">USB-C<span class="port-meta">TYPE-C · SERVICE</span></div>
+            <div class="usb-target sd" data-usb="lan">SD SLOT<span class="port-meta">MEMORY CARD</span></div>
+          </div>
         </div>
       </div>`;
-    const plug = session.root.querySelector("#usb-plug");
-    const targets = [...session.root.querySelectorAll("[data-usb]")];
-    function transform(dx = 0, dy = 0) { plug.style.transform = `translate(${dx}px,${dy}px) rotate(${flips % 2 ? 0 : 180}deg)`; }
-    function rotate() {
-      flips += 1;
-      transform();
-      setMessage(session.root, flips % 2 ? "Diese Seite fühlt sich verdächtig richtig an." : "Und wieder falsch. USB bleibt USB.", flips % 2 ? "good" : "");
-      session.api.sound("tick", 190);
-    }
-    session.on(session.root.querySelector("#rotate-usb"), "click", rotate);
-    bindDrag(session, plug, {
-      start(point) { startPoint = point; plug.classList.add("dragging"); },
-      move(point) {
-        transform(point.x-startPoint.x, point.y-startPoint.y);
-        targets.forEach((target) => {
-          const r = target.getBoundingClientRect();
-          target.classList.toggle("glow", Math.hypot(point.x-(r.left+r.width/2),point.y-(r.top+r.height/2)) < 75);
-        });
-      },
-      end(point) {
-        plug.classList.remove("dragging");
-        targets.forEach((t) => t.classList.remove("glow"));
-        plug.style.pointerEvents = "none";
-        const target = document.elementFromPoint(point.x,point.y)?.closest?.("[data-usb]");
-        plug.style.pointerEvents = "";
-        transform();
-        if (!target) return setMessage(session.root, "Die Maus bleibt drahtlos – nur leider ohne Funk.");
-        if (target.dataset.usb === "usb-blue" && flips % 2 === 1) {
-          target.classList.add("glow");
-          setMessage(session.root, "KLICK. Die Maus erwacht.", "good");
-          session.later(() => session.finish(true, { flips }), 500);
-        } else if (target.dataset.usb === "usb-blue") {
-          session.api.penalty(5, "USB falsch herum");
-          setMessage(session.root, "Der richtige Port, die falsche Seite. USB-Tradition.", "bad");
-        } else {
-          session.api.penalty(8, "USB im falschen Anschluss");
-          setMessage(session.root, "Dieser Anschluss hat andere Lebenspläne.", "bad");
-        }
+    const plug=session.root.querySelector("#usb-plug");
+    const targets=[...session.root.querySelectorAll("[data-usb]")];
+    function correctlyOriented(){return flips%2===1;}
+    function transform(dx=0,dy=0){plug.style.transform=`translate(${dx}px,${dy}px) rotate(${correctlyOriented()?0:180}deg)`;}
+    function rotate(){flips+=1;transform();setMessage(session.root,correctlyOriented()?"Kontaktzunge oben. Jetzt den blauen USB-3.0-Port wählen.":"Kontaktzunge wieder unten.",correctlyOriented()?"good":"");session.api.sound("tick",190);}
+    function tryTarget(target){
+      if(!target)return setMessage(session.root,"Kein Anschluss getroffen.");
+      if(target.dataset.usb==="usb-blue"&&correctlyOriented()){
+        target.classList.add("glow");setMessage(session.root,"KLICK. USB-A sitzt; die Maus meldet sich an.","good");session.later(()=>session.finish(true,{flips}),500);
+      }else if(target.dataset.usb==="usb-blue"){
+        session.api.penalty(5,"USB falsch herum");setMessage(session.root,"Richtiger Port, Kontaktzunge noch auf der falschen Seite.","bad");
+      }else{
+        session.api.penalty(8,"USB im falschen Anschluss");setMessage(session.root,"Steckerform und Buchse passen nicht zusammen.","bad");
       }
+    }
+    session.on(session.root.querySelector("#rotate-usb"),"click",rotate);
+    targets.forEach(target=>session.on(target,"click",()=>tryTarget(target)));
+    bindDrag(session,plug,{
+      start(point){startPoint=point;plug.classList.add("dragging");},
+      move(point){transform(point.x-startPoint.x,point.y-startPoint.y);targets.forEach(target=>{const r=target.getBoundingClientRect();target.classList.toggle("glow",Math.hypot(point.x-(r.left+r.width/2),point.y-(r.top+r.height/2))<70);});},
+      end(point){plug.classList.remove("dragging");targets.forEach(t=>t.classList.remove("glow"));plug.style.pointerEvents="none";const target=document.elementFromPoint(point.x,point.y)?.closest?.("[data-usb]");plug.style.pointerEvents="";transform();tryTarget(target);}
     });
   }
 
@@ -661,7 +632,7 @@
       <div id="virus-desktop" class="virus-desktop">
         <div class="desktop-taskbar"><span class="desktop-start">☷ START</span><span style="margin-left:auto">MOGEL-PC · NICHT VERTRAUENSWÜRDIG</span></div>
       </div>
-      <div class="game-message">Viren: 😈 👾 🦠 · Systemdateien: 📁 💾 ⚙️</div>`;
+      <div class="game-message">MAGENTA = Malware · GELB = Systemdatei. Nur Malware isolieren.</div>`;
     const desktop = session.root.querySelector("#virus-desktop");
 
     function particles(x,y) {
@@ -679,12 +650,10 @@
       if (session.ended) return;
       const isVirus = Math.random() > .32;
       const icon = document.createElement("button");
-      const virusIcons = ["😈","👾","🦠"];
-      const systemIcons = ["📁","💾","⚙️"];
       icon.type="button";
-      icon.className="desktop-icon";
+      icon.className=`desktop-icon ${isVirus?"malware-file":"system-file"}`;
       icon.dataset.kind=isVirus?"virus":"system";
-      icon.innerHTML=`${(isVirus?virusIcons:systemIcons)[Math.floor(Math.random()*3)]}<small>${isVirus?"free_game.exe":"SYSTEM"}</small>`;
+      icon.innerHTML=`<i class="pixel-file-icon ${isVirus?"malware":"system"}"></i><small>${isVirus?"FREE_GAME.EXE":"SYSTEM"}</small>`;
       const maxX=Math.max(20,desktop.clientWidth-70);
       const maxY=Math.max(60,desktop.clientHeight-110);
       icon.style.left=`${10+Math.random()*(maxX-10)}px`;
@@ -743,8 +712,8 @@
           <div class="mail-body">${mail.body}</div>
         </article>
         <div class="classify-actions">
-          <button class="secondary-button" data-classify="real" type="button">✓ ECHT</button>
-          <button class="danger-button" data-classify="phishing" type="button">⚠ PHISHING</button>
+          <button class="secondary-button" data-classify="real" type="button">ECHT</button>
+          <button class="danger-button" data-classify="phishing" type="button">PHISHING</button>
         </div>
         <div class="game-message">Prüfe Absenderdomain, Zeitdruck und ungewöhnliche Forderungen.</div>`;
       session.root.querySelectorAll("[data-classify]").forEach(button=>session.on(button,"click",()=>{
@@ -877,7 +846,7 @@
       session.api.setStatus("PHASE 2/3");
       frame(`<h3>PHASE 2 · TONER</h3><p>Druckerlogik: Kartusche zweimal drehen, dann einsetzen.</p>
         <div id="toner" class="toner-cartridge">TONER_CMYK</div>
-        <div class="swipe-actions"><button id="turn-toner" class="secondary-button" type="button">↻ DREHEN</button><button id="install-toner" class="primary-button" type="button">EINSETZEN</button></div>`,"MAGENTA IST EINE HALTUNG.");
+        <div class="swipe-actions"><button id="turn-toner" class="secondary-button" type="button">DREHEN  DREHEN</button><button id="install-toner" class="primary-button" type="button">EINSETZEN</button></div>`,"MAGENTA IST EINE HALTUNG.");
       const toner=session.root.querySelector("#toner");
       session.on(session.root.querySelector("#turn-toner"),"click",()=>{
         tonerFlips+=1;toner.classList.toggle("rotated",tonerFlips%2===1);session.api.sound("tick",200+tonerFlips*30);

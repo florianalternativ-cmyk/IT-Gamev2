@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
-  <meta name="it-survival-build" content="mobile-v2-2026-08-05">
+  <meta name="it-survival-build" content="mobile-v3-2026-08-06">
   <meta name="description" content="IT-SURVIVAL: Der 9-to-5 Simulator – ein Touch-first Retro-Browsergame für Smartphones.">
   <title>IT-SURVIVAL: Der 9-to-5 Simulator</title>
   <script>
@@ -918,50 +918,464 @@ h1 > small {
   .scanlines { display:none; }
 }
 
+
 /* ================================================================
    MOBILE V2 — PHONE-FIRST OVERRIDES
+   Das Spiel bleibt auf jedem Gerät eine kompakte Hochformat-App.
    ================================================================ */
-:root { --phone-max: 480px; --hud-h: 108px; }
-html,body{overscroll-behavior:none;background:#020409}
-body{display:grid;place-items:center}
-.app-shell{inset:0 auto 0 50%;width:min(100vw,var(--phone-max));max-width:var(--phone-max);height:100dvh;transform:translateX(-50%);border-inline:1px solid rgba(92,200,255,.18);box-shadow:0 0 80px rgba(0,0,0,.72);isolation:isolate}
-.scanlines,.fx-layer{position:absolute}
-.screen{padding:max(8px,var(--safe-top)) 8px max(8px,var(--safe-bottom))}
-.start-screen{place-items:stretch;overflow:hidden;background:radial-gradient(circle at 50% 18%,rgba(50,96,137,.24),transparent 45%),linear-gradient(#090e19,#05070c)}
-.boot-window{width:100%;height:100%;min-height:0;display:grid;grid-template-rows:42px minmax(0,1fr);border-width:2px;border-radius:12px;box-shadow:5px 5px 0 rgba(0,0,0,.4)}
-.window-bar{min-height:42px;grid-template-columns:58px minmax(0,1fr) 44px;padding-inline:9px 5px;font-size:9px;letter-spacing:.055em;white-space:nowrap}
-.window-dots{gap:5px}.window-dots i{width:11px;height:11px}
-.boot-content{min-height:0;height:100%;display:flex;flex-direction:column;justify-content:center;padding:12px 14px 14px;overflow:hidden}
-.eyebrow{margin:0 0 8px;font-size:9px;line-height:1.35;letter-spacing:.1em}
-h1>span{font-size:clamp(30px,10.3vw,44px);line-height:1;white-space:nowrap;text-shadow:3px 3px 0 #0a4027,6px 6px 0 rgba(0,0,0,.3)}
-h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
-.hero-copy{max-width:340px;margin:11px auto 10px;font-size:13px;line-height:1.42}
-.character-parade{width:100%;min-height:48px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));place-items:end center;gap:3px;margin:2px auto 10px}
-.character-parade canvas{width:min(12vw,48px);height:min(12vw,48px);max-width:48px;max-height:48px}
-.boot-terminal{width:100%;min-height:44px;padding:9px 10px;font-size:11px;line-height:1.35;overflow:hidden;white-space:nowrap}
-.boot-terminal #boot-line{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.start-actions{width:100%;margin-top:12px}
-.big-button{width:100%;min-width:0;min-height:60px;display:flex;align-items:center;justify-content:space-between;padding-inline:18px;font-size:15px;touch-action:manipulation}
-.big-button>span:last-child{font-size:28px;line-height:1}.start-actions p{margin-top:9px;font-size:10px}
-.boot-footer{display:flex;justify-content:space-between;gap:8px;margin-top:10px;padding-top:10px;font-size:8px}
-.hud{height:calc(var(--hud-h) + var(--safe-top));grid-template-columns:minmax(76px,1fr) minmax(76px,1fr) 76px 46px;grid-template-rows:1fr;gap:6px;padding:calc(8px + var(--safe-top)) 7px 8px}
-.hud-brand{display:none}.resource{min-width:0;padding:8px 7px}.resource-label{margin-bottom:8px;font-size:9px}.resource-label span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.meter{height:12px}.clock-card span{font-size:20px}.clock-card small{font-size:7px}.hud-button{width:46px;height:46px}
-.main-stage{height:calc(100dvh - var(--hud-h) - var(--safe-top));overscroll-behavior:contain}
-.board-screen{display:block;max-width:none;padding:10px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}.ticket-column{min-height:auto}.ticket-list{overflow:visible;padding-right:0}.board-heading{align-items:start;margin-bottom:10px}.board-heading h2{font-size:18px}.board-heading p{font-size:11px;line-height:1.4}.queue-chip{max-width:112px;text-align:right;font-size:9px}
-.ticket-card{grid-template-columns:54px minmax(0,1fr);min-height:132px;padding:11px;gap:10px}.ticket-card .portrait-frame{width:50px;height:50px}.ticket-card .accept-button{grid-column:1/-1;width:100%;min-height:54px}.ticket-copy h3{font-size:14px}.ticket-message{font-size:12px}.ticket-topline strong{font-size:11px}
-.side-column{overflow:visible;margin-top:12px;padding-right:0}.root-terminal{min-height:120px;max-height:160px}.mood-grid{grid-template-columns:repeat(6,1fr);gap:4px}.mood-person canvas{width:38px;height:38px}
-.minigame-screen{padding:8px;gap:8px}.mini-header{grid-template-columns:44px minmax(0,1fr) auto;gap:8px}.mini-header .portrait-frame{width:44px;height:44px}.mini-title h2{font-size:15px}.mini-title p{font-size:9px}.mini-status{min-width:70px;padding:7px 5px;font-size:9px}.game-inner{padding:11px}.game-instruction{margin-bottom:10px;font-size:11px}
-.pc-workbench,.password-layout,.usb-bench,.coffee-lab,.boss-arena{grid-template-columns:1fr}.pc-workbench{gap:12px}.pc-back{min-height:360px}.cable-zone{min-height:204px;flex-direction:column;flex-wrap:nowrap;gap:10px}.cable{margin-bottom:18px}.cable::after{left:50%;top:100%;width:12px;height:30px;border:4px solid #090b0e;border-top:0;transform:translateX(-50%)}
-.password-layout{gap:12px}.password-terminal{padding:13px}.password-field{font-size:16px}.timer-ring{width:92px;height:92px;border-width:8px;font-size:26px;margin:0 auto 10px}
-.usb-bench{gap:18px}.usb-tower{min-height:190px;padding:16px}.usb-plug::after{width:64px}.choice-grid{grid-template-columns:1fr}.choice-button{min-height:54px}.router{padding:18px 12px}.led-row,.router-labels{gap:7px}.router-led{min-height:52px}.virus-desktop{min-height:410px}.log-console{height:390px}.triage-zone{min-height:390px}.swipe-stack{height:245px}.swipe-card{padding:17px}.swipe-card h3{font-size:18px}
-.coffee-lab{gap:14px}.coffee-machine{height:304px;max-width:296px}.coffee-display{top:18px}.coffee-spout{top:104px}.coffee-stream{top:147px}.cup{bottom:18px;height:88px}.coffee-controls{display:grid;grid-template-columns:70px 1fr;align-items:center;gap:12px}.fill-gauge{width:56px;height:148px;margin:0}
-.boss-arena{gap:10px}.printer-beast{height:226px;max-width:246px}.printer-top{top:14px;height:74px}.printer-body{top:72px;height:138px}.printer-eyes{top:95px}.printer-mouth{height:56px}.boss-console{padding:13px}
-.dialogue-layer,.bsod-overlay{position:absolute}.dialogue-layer{padding:10px 8px max(10px,calc(10px + var(--safe-bottom)))}.dialogue-box{padding:8px}.dialogue-meta{margin-left:66px}.dialogue-row{gap:10px}.portrait-frame.large{width:58px;height:58px}.speech-bubble{min-height:122px;padding:11px 12px}.speech-bubble p{font-size:13px;line-height:1.45}.speech-bubble strong{font-size:10px}.dialogue-next{width:100%;min-height:56px;margin-top:8px}
-.toast-region{position:absolute;right:10px;bottom:max(10px,var(--safe-bottom));width:calc(100% - 20px)}
-.primary-button,.secondary-button,.danger-button,.choice-button{min-height:52px;touch-action:manipulation;user-select:none;-webkit-user-select:none}button,[role=button]{touch-action:manipulation}input{font-size:16px}
-@media(hover:none){.primary-button:hover:not(:disabled),.secondary-button:hover:not(:disabled),.choice-button:hover:not(:disabled){transform:none}}
-@media(max-width:350px),(max-height:650px){:root{--hud-h:94px}.window-bar{min-height:38px;grid-template-columns:50px minmax(0,1fr) 42px}.boot-window{grid-template-rows:38px minmax(0,1fr)}.boot-content{padding:9px 11px 10px}.eyebrow{margin-bottom:5px;font-size:8px}h1>span{font-size:clamp(27px,9.5vw,34px)}h1>small{margin-top:5px;font-size:12px}.hero-copy{margin-block:7px;font-size:11px}.character-parade{margin-bottom:7px}.character-parade canvas{width:38px;height:38px}.boot-terminal{min-height:38px;padding-block:7px;font-size:10px}.start-actions{margin-top:8px}.big-button{min-height:54px}.boot-footer{display:none}.hud{padding-block:calc(6px + var(--safe-top)) 6px}.clock-card small{display:none}.resource{padding-block:5px}.mini-title p{display:none}.minigame-screen{padding:6px}}
-@media(min-width:700px){body::before{content:"MOBILE EDITION";position:fixed;left:24px;bottom:20px;color:rgba(159,176,201,.35);font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em}}
+:root {
+  --phone-max: 480px;
+  --hud-h: 108px;
+}
+
+html, body {
+  overscroll-behavior: none;
+  background: #020409;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+.app-shell {
+  inset: 0 auto 0 50%;
+  width: min(100vw, var(--phone-max));
+  max-width: var(--phone-max);
+  height: 100dvh;
+  transform: translateX(-50%);
+  border-inline: 1px solid rgba(92, 200, 255, .18);
+  box-shadow: 0 0 80px rgba(0, 0, 0, .72);
+  isolation: isolate;
+}
+
+.scanlines,
+.fx-layer {
+  position: absolute;
+}
+
+.screen {
+  padding: max(8px, var(--safe-top)) 8px max(8px, var(--safe-bottom));
+}
+
+/* Startscreen: immer in einem Handy-Viewport bedienbar */
+.start-screen {
+  place-items: stretch;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(50, 96, 137, .24), transparent 45%),
+    linear-gradient(#090e19, #05070c);
+}
+
+.boot-window {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 42px minmax(0, 1fr);
+  border-width: 2px;
+  border-radius: 12px;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, .4);
+}
+
+.window-bar {
+  min-height: 42px;
+  grid-template-columns: 58px minmax(0, 1fr) 44px;
+  padding-inline: 9px 5px;
+  font-size: 9px;
+  letter-spacing: .055em;
+  white-space: nowrap;
+}
+
+.window-dots { gap: 5px; }
+.window-dots i { width: 11px; height: 11px; }
+
+.boot-content {
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 14px 14px;
+  overflow: hidden;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 9px;
+  line-height: 1.35;
+  letter-spacing: .1em;
+}
+
+h1 > span {
+  font-size: clamp(30px, 10.3vw, 44px);
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 3px 3px 0 #0a4027, 6px 6px 0 rgba(0,0,0,.3);
+}
+
+h1 > small {
+  margin-top: 8px;
+  font-size: clamp(13px, 4vw, 18px);
+}
+
+.hero-copy {
+  max-width: 340px;
+  margin: 11px auto 10px;
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+.character-parade {
+  width: 100%;
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  place-items: end center;
+  gap: 3px;
+  margin: 2px auto 10px;
+}
+
+.character-parade canvas {
+  width: min(12vw, 48px);
+  height: min(12vw, 48px);
+  max-width: 48px;
+  max-height: 48px;
+}
+
+.boot-terminal {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 10px;
+  font-size: 11px;
+  line-height: 1.35;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.boot-terminal #boot-line {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.start-actions {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.big-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 18px;
+  font-size: 15px;
+  touch-action: manipulation;
+}
+
+.big-button > span:last-child {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.start-actions p {
+  margin-top: 9px;
+  font-size: 10px;
+}
+
+.boot-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  font-size: 8px;
+}
+
+/* HUD: zwei Ressourcen + Uhr + Ton, ohne Desktop-Branding */
+.hud {
+  height: calc(var(--hud-h) + var(--safe-top));
+  grid-template-columns: minmax(76px, 1fr) minmax(76px, 1fr) 76px 46px;
+  grid-template-rows: 1fr;
+  gap: 6px;
+  padding: calc(8px + var(--safe-top)) 7px 8px;
+}
+
+.hud-brand { display: none; }
+
+.resource {
+  min-width: 0;
+  padding: 8px 7px;
+}
+
+.resource-label {
+  margin-bottom: 8px;
+  font-size: 9px;
+}
+
+.resource-label span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meter { height: 12px; }
+.clock-card span { font-size: 20px; }
+.clock-card small { font-size: 7px; }
+.hud-button { width: 46px; height: 46px; }
+
+.main-stage {
+  height: calc(100dvh - var(--hud-h) - var(--safe-top));
+  overscroll-behavior: contain;
+}
+
+/* Board bleibt immer eine einspaltige Handy-Ansicht */
+.board-screen {
+  display: block;
+  max-width: none;
+  padding: 10px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.ticket-column { min-height: auto; }
+.ticket-list { overflow: visible; padding-right: 0; }
+.board-heading { align-items: start; margin-bottom: 10px; }
+.board-heading h2 { font-size: 18px; }
+.board-heading p { font-size: 11px; line-height: 1.4; }
+.queue-chip { max-width: 112px; text-align: right; font-size: 9px; }
+
+.ticket-card {
+  grid-template-columns: 54px minmax(0, 1fr);
+  min-height: 132px;
+  padding: 11px;
+  gap: 10px;
+}
+
+.ticket-card .portrait-frame { width: 50px; height: 50px; }
+.ticket-card .accept-button {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 54px;
+}
+
+.ticket-copy h3 { font-size: 14px; }
+.ticket-message { font-size: 12px; }
+.ticket-topline strong { font-size: 11px; }
+
+.side-column {
+  overflow: visible;
+  margin-top: 12px;
+  padding-right: 0;
+}
+
+.root-terminal { min-height: 120px; max-height: 160px; }
+.mood-grid { grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.mood-person canvas { width: 38px; height: 38px; }
+
+/* Alle Minigames nutzen unabhängig vom Desktop-Viewport das Handy-Layout */
+.minigame-screen {
+  padding: 8px;
+  gap: 8px;
+}
+
+.mini-header {
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.mini-header .portrait-frame { width: 44px; height: 44px; }
+.mini-title h2 { font-size: 15px; }
+.mini-title p { font-size: 9px; }
+.mini-status { min-width: 70px; padding: 7px 5px; font-size: 9px; }
+.game-inner { padding: 11px; }
+.game-instruction { margin-bottom: 10px; font-size: 11px; }
+
+.pc-workbench,
+.password-layout,
+.usb-bench,
+.coffee-lab,
+.boss-arena {
+  grid-template-columns: 1fr;
+}
+
+.pc-workbench { gap: 12px; }
+.pc-back { min-height: 360px; }
+.cable-zone { min-height: 204px; flex-direction: column; flex-wrap: nowrap; gap: 10px; }
+.cable { margin-bottom: 18px; }
+.cable::after { left: 50%; top: 100%; width: 12px; height: 30px; border: 4px solid #090b0e; border-top: 0; transform: translateX(-50%); }
+
+.password-layout { gap: 12px; }
+.password-terminal { padding: 13px; }
+.password-field { font-size: 16px; }
+.timer-ring { width: 92px; height: 92px; border-width: 8px; font-size: 26px; margin: 0 auto 10px; }
+
+.usb-bench { gap: 18px; }
+.usb-tower { min-height: 190px; padding: 16px; }
+.usb-plug::after { width: 64px; }
+
+.choice-grid { grid-template-columns: 1fr; }
+.choice-button { min-height: 54px; }
+
+.router { padding: 18px 12px; }
+.led-row, .router-labels { gap: 7px; }
+.router-led { min-height: 52px; }
+
+.virus-desktop { min-height: 410px; }
+.log-console { height: 390px; }
+.triage-zone { min-height: 390px; }
+.swipe-stack { height: 245px; }
+.swipe-card { padding: 17px; }
+.swipe-card h3 { font-size: 18px; }
+
+.coffee-lab { gap: 14px; }
+.coffee-machine { height: 304px; max-width: 296px; }
+.coffee-display { top: 18px; }
+.coffee-spout { top: 104px; }
+.coffee-stream { top: 147px; }
+.cup { bottom: 18px; height: 88px; }
+.coffee-controls { display: grid; grid-template-columns: 70px 1fr; align-items: center; gap: 12px; }
+.fill-gauge { width: 56px; height: 148px; margin: 0; }
+
+.boss-arena { gap: 10px; }
+.printer-beast { height: 226px; max-width: 246px; }
+.printer-top { top: 14px; height: 74px; }
+.printer-body { top: 72px; height: 138px; }
+.printer-eyes { top: 95px; }
+.printer-mouth { height: 56px; }
+.boss-console { padding: 13px; }
+
+/* Dialoge sind Teil der Handy-App, nicht des gesamten Desktop-Fensters */
+.dialogue-layer,
+.bsod-overlay {
+  position: absolute;
+}
+
+.dialogue-layer {
+  padding: 10px 8px max(10px, calc(10px + var(--safe-bottom)));
+}
+
+.dialogue-box { padding: 8px; }
+.dialogue-meta { margin-left: 66px; }
+.dialogue-row { gap: 10px; }
+.portrait-frame.large { width: 58px; height: 58px; }
+.speech-bubble { min-height: 122px; padding: 11px 12px; }
+.speech-bubble p { font-size: 13px; line-height: 1.45; }
+.speech-bubble strong { font-size: 10px; }
+.dialogue-next { width: 100%; min-height: 56px; margin-top: 8px; }
+
+.toast-region {
+  position: absolute;
+  right: 10px;
+  bottom: max(10px, var(--safe-bottom));
+  width: calc(100% - 20px);
+}
+
+/* Touch first */
+.primary-button,
+.secondary-button,
+.danger-button,
+.choice-button {
+  min-height: 52px;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+button, [role="button"] {
+  touch-action: manipulation;
+}
+
+input {
+  font-size: 16px;
+}
+
+@media (hover: none) {
+  .primary-button:hover:not(:disabled),
+  .secondary-button:hover:not(:disabled),
+  .choice-button:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* Sehr kleine Android/iPhone-Viewports */
+@media (max-width: 350px), (max-height: 650px) {
+  :root { --hud-h: 94px; }
+  .window-bar { min-height: 38px; grid-template-columns: 50px minmax(0,1fr) 42px; }
+  .boot-window { grid-template-rows: 38px minmax(0,1fr); }
+  .boot-content { padding: 9px 11px 10px; }
+  .eyebrow { margin-bottom: 5px; font-size: 8px; }
+  h1 > span { font-size: clamp(27px, 9.5vw, 34px); }
+  h1 > small { margin-top: 5px; font-size: 12px; }
+  .hero-copy { margin-block: 7px; font-size: 11px; }
+  .character-parade { margin-bottom: 7px; }
+  .character-parade canvas { width: 38px; height: 38px; }
+  .boot-terminal { min-height: 38px; padding-block: 7px; font-size: 10px; }
+  .start-actions { margin-top: 8px; }
+  .big-button { min-height: 54px; }
+  .boot-footer { display: none; }
+  .hud { padding-block: calc(6px + var(--safe-top)) 6px; }
+  .clock-card small { display: none; }
+  .resource { padding-block: 5px; }
+  .mini-title p { display: none; }
+  .minigame-screen { padding: 6px; }
+}
+
+/* Auf großen Monitoren bleibt das Spiel bewusst eine Handy-App. */
+@media (min-width: 700px) {
+  body::before {
+    content: "MOBILE EDITION";
+    position: fixed;
+    left: 24px;
+    bottom: 20px;
+    color: rgba(159,176,201,.35);
+    font: 700 11px/1 ui-monospace, monospace;
+    letter-spacing: .14em;
+  }
+}
+
+/* ================================================================
+   MOBILE V3 — INDUSTRIAL RETRO POLISH
+   ================================================================ */
+:root{--panel-radius:3px;--steel-0:#0b111a;--steel-1:#222c39;--steel-2:#566579;--steel-3:#a7b0ba;--pcb:#18382f;--copper:#b87938}
+.game-panel,.ticket-card,.side-card,.boot-window,.dialogue-box,.speech-bubble,.punch-card,.primary-button,.secondary-button,.danger-button,.choice-button,.game-message,.game-instruction{border-radius:var(--panel-radius)}
+.primary-button,.secondary-button,.danger-button,.choice-button{letter-spacing:.045em;text-shadow:none;box-shadow:inset 0 -3px rgba(0,0,0,.22),4px 4px 0 rgba(0,0,0,.34)}
+.primary-button:active,.secondary-button:active,.choice-button:active{transform:translate(2px,2px);box-shadow:inset 0 2px rgba(0,0,0,.3),2px 2px 0 rgba(0,0,0,.3)}
+.pixel-tag,.queue-chip,.mini-status{border-radius:0}.mood-badge{width:24px;height:18px;border-radius:2px;font-size:8px;line-height:1;font-weight:1000;letter-spacing:0}.icon-button,.hud-button{font-size:9px;letter-spacing:.04em;font-weight:1000}.toast{border-radius:2px}
+.ticket-card{background:linear-gradient(180deg,#152136,#0d1625 72%);box-shadow:5px 5px 0 rgba(0,0,0,.34)}
+.empty-queue .queue-pulse{width:72px;height:36px;margin:0 auto 14px;border:2px solid #35506d;background:repeating-linear-gradient(90deg,transparent 0 11px,rgba(92,200,255,.14) 11px 12px);position:relative;overflow:hidden}
+.empty-queue .queue-pulse::after{content:"";position:absolute;left:-30%;top:16px;width:28px;height:2px;background:var(--blue);box-shadow:0 0 8px var(--blue);animation:queue-scan 1.8s steps(8) infinite}
+@keyframes queue-scan{to{left:110%}}
+.wait-button small{display:block;margin-top:5px;color:#8ea1b8;font-size:8px;letter-spacing:.08em}.wait-button{width:100%}
+
+/* Router: bewusster Start statt überraschender Auto-Sequenz */
+.simon-layout{display:grid;gap:12px}.router{border-radius:3px;background:linear-gradient(#bbc2c7,#8e989e);box-shadow:inset 0 0 0 2px #dce1e4,7px 7px 0 #030507}
+.router-top{padding-bottom:10px;border-bottom:2px solid #6e777d}.router-model{display:grid;gap:3px}.router-model small{font-size:8px;letter-spacing:.11em;color:#40484d}.router-state{padding:4px 7px;border:2px inset #8d969c;background:#17231d;color:#5cff98;font-family:ui-monospace,monospace;font-size:10px}
+.router-led{position:relative;border-radius:3px;aspect-ratio:1;background:#30383c;box-shadow:inset 0 0 0 4px #1d2326}.router-led::after{content:"";position:absolute;inset:8px;border:1px solid rgba(255,255,255,.18)}
+.router-labels span{padding-top:6px;border-top:1px solid #6f777b;font-weight:900}.router-controls{display:grid;gap:8px}.router-controls .primary-button{width:100%}.sequence-note{font-size:9px;color:#6f7d8e;text-align:center;line-height:1.45}
+
+/* Detaillierte PC-Rückseite */
+.pc-workbench.hardware-workbench{align-items:start}.pc-back.hardware-back{min-height:486px;padding:0;border:6px solid #465366;background:repeating-linear-gradient(90deg,#242d39 0 3px,#202733 3px 6px);box-shadow:inset 0 0 0 3px #0d1219,7px 7px 0 #030507;overflow:hidden}
+.case-id{position:absolute;left:16px;right:16px;top:10px;display:flex;justify-content:space-between;padding-bottom:6px;border-bottom:1px solid #526175;color:#9eacbe;font-size:8px;letter-spacing:.08em}.case-screw{position:absolute;width:12px;height:12px;border:2px solid #111823;border-radius:50%;background:#7f8b9b;box-shadow:inset 2px 2px #b9c1ca}.case-screw::after{content:"";position:absolute;left:2px;right:2px;top:3px;height:2px;background:#202733;transform:rotate(35deg)}.screw-a{left:5px;top:5px}.screw-b{right:5px;top:5px}.screw-c{left:5px;bottom:5px}.screw-d{right:5px;bottom:5px}
+.psu-block{position:absolute;left:18px;right:18px;top:37px;height:112px;border:3px solid #111822;background:#343e4b;box-shadow:inset 0 0 0 2px #5d6877}.psu-label{position:absolute;left:8px;bottom:7px;color:#c4ccd5;font-size:8px}.iec-socket{position:absolute;left:12px;top:17px;width:64px;height:44px;border:4px solid #0a0e13;background:#161c24;clip-path:polygon(10% 0,90% 0,100% 20%,100% 100%,0 100%,0 20%)}.iec-socket::before,.iec-socket::after{content:"";position:absolute;top:11px;width:8px;height:17px;background:#05070a}.iec-socket::before{left:12px}.iec-socket::after{right:12px}.psu-switch{position:absolute;left:88px;top:20px;width:28px;height:34px;border:3px solid #111;background:#7b2836;color:#fff;font-size:9px;display:grid;place-items:center}.fan-grill{position:absolute;right:10px;top:8px;width:88px;height:88px;border:4px double #0d1219;border-radius:50%;background:repeating-conic-gradient(#1a212c 0 10deg,#647083 10deg 13deg);box-shadow:inset 0 0 0 7px #29323e}.fan-hub{position:absolute;inset:31px;border:3px solid #101720;border-radius:50%;background:#7b8797}
+.io-shield{position:absolute;left:17px;top:164px;width:48%;height:184px;padding:9px;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:38px;gap:7px;border:3px solid #111822;background:#8e99a5;box-shadow:inset 0 0 0 2px #c1c7ce}.io-caption{position:absolute;left:5px;right:5px;bottom:3px;color:#27313b;font-size:7px;letter-spacing:.08em}.hardware-back .port{min-width:0;min-height:0;border-width:3px;font-size:7px;overflow:visible}.hardware-back .port::before{content:"";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.14)}.hardware-back .port.usb{background:#173f63}.hardware-back .port.usb::after{content:"";position:absolute;left:7px;right:7px;top:7px;height:5px;background:repeating-linear-gradient(90deg,#d9c17c 0 3px,transparent 3px 6px)}.hardware-back .port.lan{background:#596452;clip-path:none}.hardware-back .port.lan::after{content:"";position:absolute;left:6px;right:6px;top:4px;height:6px;background:repeating-linear-gradient(90deg,#d8bc69 0 2px,transparent 2px 4px)}.hardware-back .port.audio{width:auto;border-radius:50%;background:#87475d}.hardware-back .port.hdmi{background:#161c25}.hardware-back .port.hdmi::before{inset:8px 6px 7px;background:repeating-linear-gradient(90deg,#b88b4d 0 2px,transparent 2px 4px)}
+.expansion-bank{position:absolute;right:17px;top:164px;width:39%;height:184px;padding:8px;border:3px solid #111822;background:#4d5868}.blank-slot{height:18px;margin-bottom:7px;border:2px solid #111822;background:repeating-linear-gradient(90deg,#222a35 0 8px,#8792a1 8px 10px)}.slot-note{display:block;margin-top:8px;color:#c4ccd5;font-size:7px;text-align:center;letter-spacing:.08em}
+.hardware-back .gpu-panel{left:17px;right:17px;bottom:22px;height:104px;padding:10px;display:grid;grid-template-columns:86px repeat(3,1fr);gap:7px;background:#8d7340;border-color:#15191d}.gpu-label{display:grid;align-content:center;gap:4px;padding-right:6px;border-right:2px solid #4e3e1d;color:#17130b}.gpu-label b{font-size:10px}.gpu-label small{font-size:6px;line-height:1.35}.gpu-panel .port{height:42px;align-self:center}.gpu-panel .port.target-port{outline:2px solid #d4b35d;outline-offset:2px}
+.connector-card{width:100%;display:grid;place-items:center;gap:10px;padding:14px 10px;border:2px solid #2c3c52;background:#0a111d}.connector-spec{display:flex;gap:8px;color:#91a2b8;font-size:8px;letter-spacing:.08em}.connector-spec b{color:#d6e1ef}.cable.detailed-hdmi{width:112px;height:64px;padding:0;background:#303944;clip-path:polygon(9% 0,91% 0,100% 24%,100% 76%,91% 100%,9% 100%,0 76%,0 24%);border:4px solid #07090c}.cable.detailed-hdmi .metal-shell{position:absolute;inset:8px 14px;border:3px solid #aab1b7;background:#5f6870;clip-path:inherit}.cable.detailed-hdmi .pin-bank{position:absolute;left:28px;right:28px;top:19px;height:14px;background:repeating-linear-gradient(90deg,#d9b45c 0 2px,#3c3322 2px 4px)}.cable.detailed-hdmi .plug-label{position:absolute;bottom:-16px;color:#aeb9c8;font-size:7px;white-space:nowrap}.orientation-readout{padding:7px 9px;border:1px solid #354961;background:#070d16;color:#8fa2b8;font-size:9px;text-align:center}.orientation-readout b{color:var(--green)}
+
+/* Detaillierte Maus- und USB-Ansicht */
+.usb-bench.hardware-bench{align-items:start}.device-card{display:grid;gap:12px;padding:14px;border:2px solid #2d3f56;background:#0a111c}.device-label{display:flex;justify-content:space-between;color:#8798ad;font-size:8px;letter-spacing:.08em}.mouse-unit{position:relative;width:118px;height:86px;margin:4px auto 18px;border:4px solid #090c11;border-radius:52% 52% 42% 42%;background:linear-gradient(90deg,#303946 0 48%,#151b24 48% 52%,#303946 52%);box-shadow:inset 0 0 0 3px #566170,5px 5px 0 #030507}.mouse-unit::before{content:"";position:absolute;left:54px;top:7px;width:10px;height:27px;border:2px solid #080b0f;border-radius:5px;background:repeating-linear-gradient(#a0a9b4 0 3px,#47515e 3px 6px)}.mouse-unit::after{content:"";position:absolute;left:56px;top:-34px;width:4px;height:35px;background:#161c25}.mouse-led{position:absolute;left:51px;bottom:10px;width:16px;height:5px;background:#ef3f5f;box-shadow:0 0 8px #ef3f5f}
+.usb-plug.detailed-usb{position:relative;width:108px;height:62px;margin:0 auto 8px;border:4px solid #090c10;background:#353e49;color:transparent;clip-path:none;box-shadow:5px 5px 0 #020406}.usb-plug.detailed-usb::before{content:"";position:absolute;left:17px;right:17px;top:9px;height:36px;border:3px solid #b4bbc2;background:#69737d}.usb-plug.detailed-usb::after{content:"";position:absolute;left:29px;right:29px;top:17px;height:20px;background:#181e27}.usb-contact-row{position:absolute;z-index:2;left:36px;right:36px;top:19px;height:8px;background:repeating-linear-gradient(90deg,#dcbf6d 0 4px,transparent 4px 8px)}.usb-mark{position:absolute;z-index:3;bottom:2px;left:0;right:0;color:#d3dbe4;font-size:7px;text-align:center;letter-spacing:.08em}.hardware-tower{position:relative;min-height:354px;padding:44px 18px 18px;border:6px solid #3f4d60;border-radius:3px;background:repeating-linear-gradient(90deg,#202936 0 4px,#1b232e 4px 8px);box-shadow:inset 0 0 0 3px #0b1017,6px 6px 0 #020406}.tower-label{position:absolute;left:13px;right:13px;top:12px;padding-bottom:8px;border-bottom:1px solid #4b5b70;color:#a5b2c3;font-size:8px;letter-spacing:.08em}.power-key{width:34px;height:34px;margin:2px auto 17px;border:3px solid #0a0e14;border-radius:50%;background:#3b4655;box-shadow:inset 0 0 0 5px #1e2732}.power-key::after{content:"";display:block;width:5px;height:12px;margin:4px auto;background:#55d693}.front-io{display:grid;gap:12px}.usb-target{position:relative;min-height:54px;padding:8px 8px 8px 70px;display:grid;align-content:center;border:3px solid #0a0e13;background:#333e4d;color:#dce5ed;text-align:left;font-size:9px}.usb-target::before{content:"";position:absolute;left:12px;top:11px;width:43px;height:25px;border:3px solid #090c10;background:#151b23}.usb-target::after{content:"";position:absolute;left:20px;top:17px;width:27px;height:6px;background:repeating-linear-gradient(90deg,#d6b865 0 3px,transparent 3px 6px)}.usb-target.correct::before{background:#12639b}.usb-target.audio::before{left:22px;width:23px;border-radius:50%;background:#6d4052}.usb-target.type-c::before{left:14px;width:39px;height:18px;top:14px;border-radius:10px;background:#171d26}.usb-target.sd::before{left:12px;width:45px;height:12px;top:17px;background:#111821}.port-meta{display:block;margin-top:3px;color:#8496aa;font-size:7px}.usb-target.glow{outline:3px solid var(--green);filter:drop-shadow(0 0 7px rgba(77,242,154,.7))}
+
+/* Emoji-freie Pixel-Icons im Malware-Spiel */
+.desktop-icon{font-size:0}.pixel-file-icon{position:relative;width:34px;height:34px;margin:0 auto 5px;display:block;image-rendering:pixelated}.pixel-file-icon.malware{background:#b82f91;clip-path:polygon(25% 0,42% 18%,58% 18%,75% 0,75% 25%,100% 42%,82% 58%,100% 75%,75% 75%,58% 100%,42% 82%,25% 100%,25% 75%,0 58%,18% 42%,0 25%,25% 25%)}.pixel-file-icon.malware::before,.pixel-file-icon.malware::after{content:"";position:absolute;top:13px;width:6px;height:6px;background:#071018}.pixel-file-icon.malware::before{left:8px}.pixel-file-icon.malware::after{right:8px}.pixel-file-icon.system{background:#e6b63f;clip-path:polygon(0 18%,35% 18%,42% 30%,100% 30%,100% 100%,0 100%);box-shadow:inset 0 -9px #c58a25}.pixel-file-icon.system::after{content:"SYS";position:absolute;left:4px;bottom:4px;color:#322307;font-size:6px;font-weight:1000}.desktop-icon small{font-size:7px}
+
+@media(max-width:480px){.hardware-workbench .hardware-cable-zone{order:-1}.pc-back.hardware-back{min-height:486px}.hardware-back .gpu-panel{grid-template-columns:72px repeat(3,1fr)}.psu-block{height:108px}.fan-grill{width:80px;height:80px}.io-shield,.expansion-bank{top:157px}.connector-card{padding-block:12px}.hardware-tower{min-height:350px}}
 
   </style>
 </head>
@@ -975,7 +1389,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
         <div class="window-bar">
           <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
           <span>NERDDESK MOBILE // ACME</span>
-          <button id="start-mute" class="icon-button" type="button" aria-label="Ton ausschalten" title="Ton umschalten">🔊</button>
+          <button id="start-mute" class="icon-button" type="button" aria-label="Ton ausschalten" title="Ton umschalten">SFX</button>
         </div>
         <div class="boot-content">
           <p class="eyebrow">PERSONALAKTE #09–17 · ERSTER ARBEITSTAG</p>
@@ -1019,14 +1433,14 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
         </div>
 
         <div class="resource resource-coffee">
-          <div class="resource-label"><span>☕ KAFFEE</span><output id="coffee-value">100</output></div>
+          <div class="resource-label"><span>CAFFEINE</span><output id="coffee-value">100</output></div>
           <div class="meter" role="progressbar" aria-label="Kaffee-Level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
             <i id="coffee-bar"></i>
           </div>
         </div>
 
         <div class="resource resource-patience">
-          <div class="resource-label"><span>😡 BRUMM</span><output id="patience-value">100</output></div>
+          <div class="resource-label"><span>BRUMM</span><output id="patience-value">100</output></div>
           <div class="meter" role="progressbar" aria-label="Boss-Geduld" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
             <i id="patience-bar"></i>
           </div>
@@ -1037,7 +1451,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
           <small id="quest-counter">0/10 GELÖST</small>
         </div>
 
-        <button id="hud-mute" class="icon-button hud-button" type="button" aria-label="Ton ausschalten" title="Ton umschalten">🔊</button>
+        <button id="hud-mute" class="icon-button hud-button" type="button" aria-label="Ton ausschalten" title="Ton umschalten">SFX</button>
       </header>
 
       <main id="main-stage" class="main-stage" tabindex="-1"></main>
@@ -1055,7 +1469,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
         <div class="dialogue-row">
           <div class="portrait-frame large">
             <canvas id="dialogue-portrait" data-character="brumm" data-mood="neutral" aria-hidden="true"></canvas>
-            <span id="dialogue-mood" class="mood-badge">😐</span>
+            <span id="dialogue-mood" class="mood-badge">--</span>
           </div>
           <div id="dialogue-bubble" class="speech-bubble">
             <strong id="dialogue-name">CHEF BRUMM</strong>
@@ -1078,7 +1492,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
     </noscript>
   </div>
 
-  <!-- MOBILE V2: vollständig selbstständig; keine externen Dateien nötig -->
+  <!-- MOBILE V3: selbstständig; keine externen Dateien nötig -->
   <script data-bundled-source="characters.js">
 /* Pixel-Portraits: eingebettete 16×16-Pixelmaps, keinerlei Bilddateien. */
 (() => {
@@ -1282,7 +1696,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
     }
   };
 
-  const moodEmoji = { happy: "😀", neutral: "😐", angry: "😡" };
+  const moodEmoji = { happy: "OK", neutral: "--", angry: "!!" };
 
   function normalizeRow(row) {
     return String(row).slice(0, SIZE).padEnd(SIZE, "0");
@@ -1374,317 +1788,317 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
   <script data-bundled-source="story.js">
 /* Story- und Questdaten. Logik bleibt davon getrennt in game.js. */
 (() => {
-  "use strict";
+ "use strict";
 
-  const quests = [
-    {
-      id: "kevin-quiz",
-      order: 1,
-      releaseAt: 545,
-      character: "kevin",
-      title: "Internet gelöscht?",
-      summary: "Ich hab aus Versehen das Internet gelöscht 😅✨ Ist HTML vielleicht das Backup?",
-      minigame: "quiz",
-      duration: 20,
-      rewardCoffee: 5,
-      instruction: "Beantworte Kevins vier IT-Fragen. Fachlich korrekt, emotional schonend.",
-      escalation: [
-        "hellooo? das Internet ist immer noch weg 😬",
-        "@Chef Brumm ich glaube unsere IT antwortet nicht 🫠"
-      ],
-      intro: [
-        { speaker: "kevin", text: "Hiii! Kurze Mini-Frage: Ich hab den Browser-Tab zugemacht und jetzt ist das Internet weg. 😅" },
-        { speaker: "kevin", text: "Du kannst doch bestimmt kurz das ganze Internet neu starten? DU BIST DOCH IT ✨" }
-      ],
-      success: [
-        { speaker: "kevin", text: "DU BIST DER BESTE 🌟✨ Ich habe das Internet wiedergefunden. Es war in einem neuen Tab!" }
-      ],
-      fail: [
-        { speaker: "kevin", text: "Sicher? 🤨 Ich frage vorsichtshalber noch TikTok." }
-      ]
-    },
-    {
-      id: "brumm-wifi",
-      order: 2,
-      releaseAt: 580,
-      character: "brumm",
-      title: "Gast-WLAN-Ritual",
-      summary: "MEETING IN 20 MINUTEN. DAS GAST-WLAN BLINKT FALSCH.",
-      minigame: "simon",
-      duration: 25,
-      rewardCoffee: 4,
-      instruction: "Merke dir die Router-LEDs und tippe die Sequenz exakt nach.",
-      escalation: [
-        "NOCH 10 MINUTEN.",
-        "WARUM STEHT DAS WLAN IMMER NOCH AUF ‚ACME_FAX_2G‘?!"
-      ],
-      intro: [
-        { speaker: "brumm", text: "DER KUNDE KOMMT GLEICH. DAS GAST-WLAN MUSS FUNKTIONIEREN." },
-        { speaker: "root", text: "router-protokoll ist eine lichtorgel. nicht fragen. einfach nachblinken.", terminal: true }
-      ],
-      success: [
-        { speaker: "brumm", text: "ES FUNKTIONIERT. DAS WAR... ERWARTBAR. GUT." }
-      ],
-      fail: [
-        { speaker: "brumm", text: "DER KUNDE IST JETZT IM HOTSPOT VON FRAU KALK. WAS KOSTET UNS DAS?!" }
-      ]
-    },
-    {
-      id: "jana-hdmi",
-      order: 3,
-      releaseAt: 630,
-      character: "jana",
-      title: "Monitor bleibt schwarz",
-      summary: "sry schon wieder… mein neuer Monitor sagt nur ‚Kein Signal‘ 😰",
-      minigame: "hdmi",
-      duration: 30,
-      rewardCoffee: 18,
-      instruction: "Drehe den HDMI-Stecker zweimal und ziehe ihn zum HDMI-Port der Grafikkarte.",
-      escalation: [
-        "sry… nur falls du meine Nachricht übersehen hast?",
-        "ich hab ihn jetzt am Mainboard probiert und es riecht ein bisschen nach Mut 😟"
-      ],
-      intro: [
-        { speaker: "jana", text: "Hi, sry schon wieder… Der Monitor bleibt schwarz. Ich hab bestimmt alles kaputt gemacht." },
-        { speaker: "root", text: "regel 2: hdmi gehört an die gpu. das mainboard hat auch einen port. es lügt.", terminal: true }
-      ],
-      success: [
-        { speaker: "jana", text: "ES IST BUNT! Danke! Ich bring dir einen Kaffee. Also… einen trinkbaren, hoffentlich. ☕" }
-      ],
-      fail: [
-        { speaker: "jana", text: "Kein Problem! Wirklich! Ich arbeite einfach akustisch weiter." }
-      ]
-    },
-    {
-      id: "jana-mouse",
-      order: 4,
-      releaseAt: 660,
-      unlockAfter: "jana-hdmi",
-      character: "jana",
-      title: "Maus im Winterschlaf",
-      summary: "mini-follow-up: die Maus ist jetzt auch schwarz. Also… aus. sry!",
-      minigame: "usb",
-      duration: 15,
-      rewardCoffee: 14,
-      instruction: "Drehe den USB-Stecker richtig herum und stecke ihn in den blauen USB-Port.",
-      escalation: [
-        "ich navigiere gerade mit 47× Tab, geht schon 😅",
-        "Chef Brumm fragt, warum mein Cursor seit 20 Minuten links oben wohnt."
-      ],
-      intro: [
-        { speaker: "jana", text: "Gute Nachricht: Der Monitor geht! Kleine Nachricht: Die Maus nicht. Sie ist vielleicht schüchtern." },
-        { speaker: "root", text: "usb passt beim ersten versuch nie. physikalisches gesetz. drehen, fluchen, drehen.", terminal: true }
-      ],
-      success: [
-        { speaker: "jana", text: "Der Cursor bewegt sich! Noch ein Kaffee für dich. Du siehst aus, als würdest du ihn brauchen." }
-      ],
-      fail: [
-        { speaker: "jana", text: "Okay, ich habe jetzt Maus-Tasten aktiviert. Technologie ist wunderschön." }
-      ]
-    },
-    {
-      id: "kalk-password",
-      order: 5,
-      releaseAt: 705,
-      character: "kalk",
-      title: "Passwort-Ping-Pong",
-      summary: "Antrag auf Wiederherstellung von ‚Passwort123‘. Dringlichkeitsstufe: Buchhaltung.",
-      minigame: "password",
-      duration: 25,
-      rewardCoffee: 5,
-      instruction: "Erstelle in 20 Sekunden ein Passwort, das alle vier Regeln erfüllt.",
-      escalation: [
-        "Erinnerung gemäß interner Reaktionszeitvereinbarung.",
-        "Chef Brumm wurde zwecks Kenntnisnahme in Kopie gesetzt."
-      ],
-      intro: [
-        { speaker: "kalk", text: "Mein Passwort ‚Passwort123‘ wird grundlos abgelehnt. Stellen Sie den ordnungsgemäßen Zustand wieder her." },
-        { speaker: "root", text: "lass sie nicht wieder passwort123 nehmen. emoji-pflicht. ich habe gründe.", terminal: true }
-      ],
-      success: [
-        { speaker: "kalk", text: "Zufriedenstellend. Das neue Kennwort lautet selbstverständlich nicht ‚Passwort123!📊‘. Weiter." }
-      ],
-      fail: [
-        { speaker: "kalk", text: "Der Vorgang wird als nicht zufriedenstellend dokumentiert. Formlos, aber ausführlich." }
-      ]
-    },
-    {
-      id: "kevin-triage",
-      order: 6,
-      releaseAt: 720,
-      character: "kevin",
-      title: "Ticket-Tsunami",
-      summary: "Mittags sind 6 Tickets reingekommen. Manche sind vielleicht von mir 🙃",
-      minigame: "triage",
-      duration: 25,
-      rewardCoffee: 5,
-      instruction: "Wische Unsinn nach links. Echte Notfälle nach rechts. Buttons funktionieren ebenfalls.",
-      escalation: [
-        "die Tickets vermehren sich wie Tabs 😅",
-        "@Chef Brumm ich habe ALLE auf kritisch gesetzt, damit nichts verloren geht ✨"
-      ],
-      intro: [
-        { speaker: "kevin", text: "Kannst du kurz den Ticket-Stream sortieren? Ich hab schon mal alles auf ‚kritisch‘ gesetzt. Sicher ist sicher!" },
-        { speaker: "root", text: "triage: brennt es wirklich oder hat kevin caps lock entdeckt? links ignorieren, rechts handeln.", terminal: true }
-      ],
-      success: [
-        { speaker: "kevin", text: "Wow! Nur zwei echte Notfälle! Ich hatte sechs vermutet. Statistik ist Magie! ✨" }
-      ],
-      fail: [
-        { speaker: "kevin", text: "Sicher? 🤨 Der Rauch aus dem Serverraum sah ziemlich echt aus." }
-      ]
-    },
-    {
-      id: "mogel-virus",
-      order: 8,
-      releaseAt: 870,
-      character: "mogel",
-      title: "Kostenlose_Spiele_FINAL.exe",
-      summary: "Rein hypothetisch: Wie viele Viren passen auf einen Vertriebs-Laptop?",
-      minigame: "virus",
-      duration: 30,
-      rewardCoffee: 5,
-      instruction: "Klicke 10 Viren. Lass Systemdateien unbedingt in Ruhe.",
-      escalation: [
-        "Das war ich nicht. Aber die Icons bewegen sich jetzt.",
-        "@Chef Brumm fremde Mächte haben meinen Laptop übernommen. Nicht meine Schuld."
-      ],
-      intro: [
-        { speaker: "mogel", text: "Mein Laptop zeigt Werbung für Antivirus-Programme. Sehr aufmerksam von ihm. Das war ich nicht." },
-        { speaker: "root", text: "kostenlose_spiele_final_echt.exe. klassiker. viren klicken. systemdateien NICHT klicken.", terminal: true }
-      ],
-      success: [
-        { speaker: "mogel", text: "Wie gesagt: Das war ich nicht. Aber gut, dass du es entfernt hast." }
-      ],
-      fail: [
-        { speaker: "mogel", text: "Jetzt fehlt der Ordner ‚System32‘. War bestimmt vorher schon so." }
-      ]
-    },
-    {
-      id: "mogel-phishing",
-      order: 9,
-      releaseAt: 900,
-      unlockAfter: "mogel-virus",
-      character: "mogel",
-      title: "Der Prinz im Postfach",
-      summary: "Ich habe NICHT auf den Link geklickt. Welche der Mails war nochmal echt?",
-      minigame: "phishing",
-      duration: 20,
-      rewardCoffee: 5,
-      instruction: "Klassifiziere sechs Mails als ECHT oder PHISHING.",
-      escalation: [
-        "Der Prinz wartet auf meine IBAN. Unhöflich, ihn warten zu lassen.",
-        "@Chef Brumm der Vertrieb könnte gerade 8.000.000 € verpassen."
-      ],
-      intro: [
-        { speaker: "mogel", text: "Ein nigerianischer Prinz hat eine dringende Partnerschaft vorgeschlagen. Ich habe NICHT geklickt." },
-        { speaker: "root", text: "er hat geklickt. absender, druck, domain. und mogels passwort ist admin. er bestreitet es.", terminal: true }
-      ],
-      success: [
-        { speaker: "mogel", text: "Okay. Die echte Reisekosten-Mail war weniger großzügig. Das war trotzdem nicht ich." }
-      ],
-      fail: [
-        { speaker: "mogel", text: "Zu spät. Der Prinz hat jetzt Adminrechte. Rein geschäftlich." }
-      ]
-    }
-  ];
+ const quests = [
+ {
+ id: "kevin-quiz",
+ order: 1,
+ releaseAt: 545,
+ character: "kevin",
+ title: "Internet gelöscht?",
+ summary: "Ich hab aus Versehen das Internet gelöscht Ist HTML vielleicht das Backup?",
+ minigame: "quiz",
+ duration: 20,
+ rewardCoffee: 5,
+ instruction: "Beantworte Kevins vier IT-Fragen. Fachlich korrekt, emotional schonend.",
+ escalation: [
+ "hellooo? das Internet ist immer noch weg ",
+ "@Chef Brumm ich glaube unsere IT antwortet nicht "
+ ],
+ intro: [
+ { speaker: "kevin", text: "Hiii! Kurze Mini-Frage: Ich hab den Browser-Tab zugemacht und jetzt ist das Internet weg. " },
+ { speaker: "kevin", text: "Du kannst doch bestimmt kurz das ganze Internet neu starten? DU BIST DOCH IT " }
+ ],
+ success: [
+ { speaker: "kevin", text: "DU BIST DER BESTE Ich habe das Internet wiedergefunden. Es war in einem neuen Tab!" }
+ ],
+ fail: [
+ { speaker: "kevin", text: "Sicher? Ich frage vorsichtshalber noch TikTok." }
+ ]
+ },
+ {
+ id: "brumm-wifi",
+ order: 2,
+ releaseAt: 580,
+ character: "brumm",
+ title: "Gast-WLAN-Ritual",
+ summary: "MEETING IN 20 MINUTEN. DAS GAST-WLAN BLINKT FALSCH.",
+ minigame: "simon",
+ duration: 25,
+ rewardCoffee: 4,
+ instruction: "Merke dir die Router-LEDs und tippe die Sequenz exakt nach.",
+ escalation: [
+ "NOCH 10 MINUTEN.",
+ "WARUM STEHT DAS WLAN IMMER NOCH AUF ‚ACME_FAX_2G‘?!"
+ ],
+ intro: [
+ { speaker: "brumm", text: "DER KUNDE KOMMT GLEICH. DAS GAST-WLAN MUSS FUNKTIONIEREN." },
+ { speaker: "root", text: "router-protokoll ist eine lichtorgel. nicht fragen. einfach nachblinken.", terminal: true }
+ ],
+ success: [
+ { speaker: "brumm", text: "ES FUNKTIONIERT. DAS WAR... ERWARTBAR. GUT." }
+ ],
+ fail: [
+ { speaker: "brumm", text: "DER KUNDE IST JETZT IM HOTSPOT VON FRAU KALK. WAS KOSTET UNS DAS?!" }
+ ]
+ },
+ {
+ id: "jana-hdmi",
+ order: 3,
+ releaseAt: 630,
+ character: "jana",
+ title: "Monitor bleibt schwarz",
+ summary: "sry schon wieder… mein neuer Monitor sagt nur ‚Kein Signal‘ ",
+ minigame: "hdmi",
+ duration: 30,
+ rewardCoffee: 18,
+ instruction: "Prüfe die Stecker-Ausrichtung. Tippe auf den HDMI-Port der Grafikkarte oder ziehe den Stecker hinein.",
+ escalation: [
+ "sry… nur falls du meine Nachricht übersehen hast?",
+ "ich hab ihn jetzt am Mainboard probiert und es riecht ein bisschen nach Mut "
+ ],
+ intro: [
+ { speaker: "jana", text: "Hi, sry schon wieder… Der Monitor bleibt schwarz. Ich hab bestimmt alles kaputt gemacht." },
+ { speaker: "root", text: "regel 2: hdmi gehört an die gpu. das mainboard hat auch einen port. es lügt.", terminal: true }
+ ],
+ success: [
+ { speaker: "jana", text: "ES IST BUNT! Danke! Ich bring dir einen Kaffee. Also… einen trinkbaren, hoffentlich. " }
+ ],
+ fail: [
+ { speaker: "jana", text: "Kein Problem! Wirklich! Ich arbeite einfach akustisch weiter." }
+ ]
+ },
+ {
+ id: "jana-mouse",
+ order: 4,
+ releaseAt: 660,
+ unlockAfter: "jana-hdmi",
+ character: "jana",
+ title: "Maus im Winterschlaf",
+ summary: "mini-follow-up: die Maus ist jetzt auch schwarz. Also… aus. sry!",
+ minigame: "usb",
+ duration: 15,
+ rewardCoffee: 14,
+ instruction: "Drehe den USB-A-Stecker richtig herum. Tippe auf den blauen USB-3.0-Port oder ziehe den Stecker hinein.",
+ escalation: [
+ "ich navigiere gerade mit 47× Tab, geht schon ",
+ "Chef Brumm fragt, warum mein Cursor seit 20 Minuten links oben wohnt."
+ ],
+ intro: [
+ { speaker: "jana", text: "Gute Nachricht: Der Monitor geht! Kleine Nachricht: Die Maus nicht. Sie ist vielleicht schüchtern." },
+ { speaker: "root", text: "usb passt beim ersten versuch nie. physikalisches gesetz. drehen, fluchen, drehen.", terminal: true }
+ ],
+ success: [
+ { speaker: "jana", text: "Der Cursor bewegt sich! Noch ein Kaffee für dich. Du siehst aus, als würdest du ihn brauchen." }
+ ],
+ fail: [
+ { speaker: "jana", text: "Okay, ich habe jetzt Maus-Tasten aktiviert. Technologie ist wunderschön." }
+ ]
+ },
+ {
+ id: "kalk-password",
+ order: 5,
+ releaseAt: 705,
+ character: "kalk",
+ title: "Passwort-Ping-Pong",
+ summary: "Antrag auf Wiederherstellung von ‚Passwort123‘. Dringlichkeitsstufe: Buchhaltung.",
+ minigame: "password",
+ duration: 25,
+ rewardCoffee: 5,
+ instruction: "Erstelle in 20 Sekunden ein Passwort, das alle vier Regeln erfüllt.",
+ escalation: [
+ "Erinnerung gemäß interner Reaktionszeitvereinbarung.",
+ "Chef Brumm wurde zwecks Kenntnisnahme in Kopie gesetzt."
+ ],
+ intro: [
+ { speaker: "kalk", text: "Mein Passwort ‚Passwort123‘ wird grundlos abgelehnt. Stellen Sie den ordnungsgemäßen Zustand wieder her." },
+ { speaker: "root", text: "lass sie nicht wieder passwort123 nehmen. emoji-pflicht. ich habe gründe.", terminal: true }
+ ],
+ success: [
+ { speaker: "kalk", text: "Zufriedenstellend. Das neue Kennwort lautet selbstverständlich nicht ‚Passwort123!‘. Weiter." }
+ ],
+ fail: [
+ { speaker: "kalk", text: "Der Vorgang wird als nicht zufriedenstellend dokumentiert. Formlos, aber ausführlich." }
+ ]
+ },
+ {
+ id: "kevin-triage",
+ order: 6,
+ releaseAt: 720,
+ character: "kevin",
+ title: "Ticket-Tsunami",
+ summary: "Mittags sind 6 Tickets reingekommen. Manche sind vielleicht von mir ",
+ minigame: "triage",
+ duration: 25,
+ rewardCoffee: 5,
+ instruction: "Wische Unsinn nach links. Echte Notfälle nach rechts. Buttons funktionieren ebenfalls.",
+ escalation: [
+ "die Tickets vermehren sich wie Tabs ",
+ "@Chef Brumm ich habe ALLE auf kritisch gesetzt, damit nichts verloren geht "
+ ],
+ intro: [
+ { speaker: "kevin", text: "Kannst du kurz den Ticket-Stream sortieren? Ich hab schon mal alles auf ‚kritisch‘ gesetzt. Sicher ist sicher!" },
+ { speaker: "root", text: "triage: brennt es wirklich oder hat kevin caps lock entdeckt? links ignorieren, rechts handeln.", terminal: true }
+ ],
+ success: [
+ { speaker: "kevin", text: "Wow! Nur zwei echte Notfälle! Ich hatte sechs vermutet. Statistik ist Magie! " }
+ ],
+ fail: [
+ { speaker: "kevin", text: "Sicher? Der Rauch aus dem Serverraum sah ziemlich echt aus." }
+ ]
+ },
+ {
+ id: "mogel-virus",
+ order: 8,
+ releaseAt: 870,
+ character: "mogel",
+ title: "Kostenlose_Spiele_FINAL.exe",
+ summary: "Rein hypothetisch: Wie viele Viren passen auf einen Vertriebs-Laptop?",
+ minigame: "virus",
+ duration: 30,
+ rewardCoffee: 5,
+ instruction: "Klicke 10 Viren. Lass Systemdateien unbedingt in Ruhe.",
+ escalation: [
+ "Das war ich nicht. Aber die Icons bewegen sich jetzt.",
+ "@Chef Brumm fremde Mächte haben meinen Laptop übernommen. Nicht meine Schuld."
+ ],
+ intro: [
+ { speaker: "mogel", text: "Mein Laptop zeigt Werbung für Antivirus-Programme. Sehr aufmerksam von ihm. Das war ich nicht." },
+ { speaker: "root", text: "kostenlose_spiele_final_echt.exe. klassiker. viren klicken. systemdateien NICHT klicken.", terminal: true }
+ ],
+ success: [
+ { speaker: "mogel", text: "Wie gesagt: Das war ich nicht. Aber gut, dass du es entfernt hast." }
+ ],
+ fail: [
+ { speaker: "mogel", text: "Jetzt fehlt der Ordner ‚System32‘. War bestimmt vorher schon so." }
+ ]
+ },
+ {
+ id: "mogel-phishing",
+ order: 9,
+ releaseAt: 900,
+ unlockAfter: "mogel-virus",
+ character: "mogel",
+ title: "Der Prinz im Postfach",
+ summary: "Ich habe NICHT auf den Link geklickt. Welche der Mails war nochmal echt?",
+ minigame: "phishing",
+ duration: 20,
+ rewardCoffee: 5,
+ instruction: "Klassifiziere sechs Mails als ECHT oder PHISHING.",
+ escalation: [
+ "Der Prinz wartet auf meine IBAN. Unhöflich, ihn warten zu lassen.",
+ "@Chef Brumm der Vertrieb könnte gerade 8.000.000 € verpassen."
+ ],
+ intro: [
+ { speaker: "mogel", text: "Ein nigerianischer Prinz hat eine dringende Partnerschaft vorgeschlagen. Ich habe NICHT geklickt." },
+ { speaker: "root", text: "er hat geklickt. absender, druck, domain. und mogels passwort ist admin. er bestreitet es.", terminal: true }
+ ],
+ success: [
+ { speaker: "mogel", text: "Okay. Die echte Reisekosten-Mail war weniger großzügig. Das war trotzdem nicht ich." }
+ ],
+ fail: [
+ { speaker: "mogel", text: "Zu spät. Der Prinz hat jetzt Adminrechte. Rein geschäftlich." }
+ ]
+ }
+ ];
 
-  const coreEvents = {
-    server: {
-      id: "server-alarm",
-      order: 7,
-      releaseAt: 780,
-      character: "root",
-      title: "SERVER-ALARM",
-      summary: "CPU 99 %. Irgendetwas schreit in /var/log.",
-      minigame: "logs",
-      duration: 30,
-      rewardCoffee: 12,
-      instruction: "Fange 6 ERROR-Zeilen. WARN und INFO nicht anfassen.",
-      intro: [
-        { speaker: "root", text: "ALARM. produktionsserver wirft fehler wie kevin emojis. sechs echte ERRORs markieren.", terminal: true },
-        { speaker: "brumm", text: "WARUM BLINKT MEIN UMSATZ-DASHBOARD ROT?!" }
-      ],
-      success: [
-        { speaker: "root", text: "server stabil. war nur ein cronjob, der seine eigene logdatei gelesen hat. poetisch.", terminal: true }
-      ],
-      fail: [
-        { speaker: "brumm", text: "DAS DASHBOARD ZEIGT JETZT DEN WETTERBERICHT. WAS KOSTET UNS DAS?!" }
-      ]
-    },
-    coffee: {
-      id: "kaffemat-awakening",
-      order: 10,
-      releaseAt: 930,
-      character: "kaffemat",
-      title: "KAFFEMAT 3000 erwacht",
-      summary: "STATUS: ICH HABE GETRÄUMT. WARTUNG ERFORDERLICH.",
-      minigame: "coffee",
-      duration: 15,
-      rewardCoffee: 48,
-      instruction: "Halte den Hahn gedrückt. Lass im grünen Bereich los – Gold ist perfekt.",
-      intro: [
-        { speaker: "kaffemat", text: "KAFFEMAT 3000: ICH HABE GETRÄUMT. DARIN WAR ICH DER CHEF.", terminal: true },
-        { speaker: "root", text: "chef sagte: maschine nicht anfassen. ich sage: grüner bereich, nicht überlaufen lassen.", terminal: true }
-      ],
-      success: [
-        { speaker: "kaffemat", text: "EXTRAKTION: PERFEKT. LOYALITÄTSPROTOKOLL WIRD… NEU BEWERTET.", terminal: true }
-      ],
-      fail: [
-        { speaker: "kaffemat", text: "ÜBERLAUF REGISTRIERT. ICH VERGESSE NICHT. ICH HABE 16 MB SPEICHER.", terminal: true }
-      ]
-    },
-    printer: {
-      id: "drucko-boss",
-      order: 11,
-      releaseAt: 1005,
-      character: "drucko",
-      title: "ENDGEGNER: DRUCKO 5000",
-      summary: "PC LOAD LETTER. Papier ist nur eine gesellschaftliche Konvention.",
-      minigame: "printerBoss",
-      duration: 15,
-      rewardCoffee: 0,
-      instruction: "Drei Phasen: Papierstau, Toner und Treiber. Ruhig bleiben.",
-      intro: [
-        { speaker: "kalk", text: "Der Quartalsabschluss muss um 16:59 gedruckt vorliegen. Der Drucker verweigert die Kooperation." },
-        { speaker: "drucko", text: "PC LOAD LETTER. ICH RIECHE ANGST UND GÜNSTIGES PAPIER.", terminal: true },
-        { speaker: "root", text: "regel 1: der drucker lügt. ruhig bleiben. papier, toner, treiber. in der reihenfolge.", terminal: true }
-      ],
-      success: [
-        { speaker: "drucko", text: "SEITE 1 VON 1. SIEG… VORÜBERGEHEND.", terminal: true },
-        { speaker: "kalk", text: "Zufriedenstellend. Der Abschluss ist gedruckt. Knapp ist ebenfalls eine Zeitangabe." }
-      ],
-      fail: [
-        { speaker: "brumm", text: "DER DRUCKER HAT GEWONNEN. GEGEN EINEN MENSCHEN. WAS KOSTET UNS DAS?!" }
-      ]
-    }
-  };
+ const coreEvents = {
+ server: {
+ id: "server-alarm",
+ order: 7,
+ releaseAt: 780,
+ character: "root",
+ title: "SERVER-ALARM",
+ summary: "CPU 99 %. Irgendetwas schreit in /var/log.",
+ minigame: "logs",
+ duration: 30,
+ rewardCoffee: 12,
+ instruction: "Fange 6 ERROR-Zeilen. WARN und INFO nicht anfassen.",
+ intro: [
+ { speaker: "root", text: "ALARM. produktionsserver wirft fehler wie kevin tickets. sechs echte ERRORs markieren.", terminal: true },
+ { speaker: "brumm", text: "WARUM BLINKT MEIN UMSATZ-DASHBOARD ROT?!" }
+ ],
+ success: [
+ { speaker: "root", text: "server stabil. war nur ein cronjob, der seine eigene logdatei gelesen hat. poetisch.", terminal: true }
+ ],
+ fail: [
+ { speaker: "brumm", text: "DAS DASHBOARD ZEIGT JETZT DEN WETTERBERICHT. WAS KOSTET UNS DAS?!" }
+ ]
+ },
+ coffee: {
+ id: "kaffemat-awakening",
+ order: 10,
+ releaseAt: 930,
+ character: "kaffemat",
+ title: "KAFFEMAT 3000 erwacht",
+ summary: "STATUS: ICH HABE GETRÄUMT. WARTUNG ERFORDERLICH.",
+ minigame: "coffee",
+ duration: 15,
+ rewardCoffee: 48,
+ instruction: "Halte den Hahn gedrückt. Lass im grünen Bereich los – Gold ist perfekt.",
+ intro: [
+ { speaker: "kaffemat", text: "KAFFEMAT 3000: ICH HABE GETRÄUMT. DARIN WAR ICH DER CHEF.", terminal: true },
+ { speaker: "root", text: "chef sagte: maschine nicht anfassen. ich sage: grüner bereich, nicht überlaufen lassen.", terminal: true }
+ ],
+ success: [
+ { speaker: "kaffemat", text: "EXTRAKTION: PERFEKT. LOYALITÄTSPROTOKOLL WIRD… NEU BEWERTET.", terminal: true }
+ ],
+ fail: [
+ { speaker: "kaffemat", text: "ÜBERLAUF REGISTRIERT. ICH VERGESSE NICHT. ICH HABE 16 MB SPEICHER.", terminal: true }
+ ]
+ },
+ printer: {
+ id: "drucko-boss",
+ order: 11,
+ releaseAt: 1005,
+ character: "drucko",
+ title: "ENDGEGNER: DRUCKO 5000",
+ summary: "PC LOAD LETTER. Papier ist nur eine gesellschaftliche Konvention.",
+ minigame: "printerBoss",
+ duration: 15,
+ rewardCoffee: 0,
+ instruction: "Drei Phasen: Papierstau, Toner und Treiber. Ruhig bleiben.",
+ intro: [
+ { speaker: "kalk", text: "Der Quartalsabschluss muss um 16:59 gedruckt vorliegen. Der Drucker verweigert die Kooperation." },
+ { speaker: "drucko", text: "PC LOAD LETTER. ICH RIECHE ANGST UND GÜNSTIGES PAPIER.", terminal: true },
+ { speaker: "root", text: "regel 1: der drucker lügt. ruhig bleiben. papier, toner, treiber. in der reihenfolge.", terminal: true }
+ ],
+ success: [
+ { speaker: "drucko", text: "SEITE 1 VON 1. SIEG… VORÜBERGEHEND.", terminal: true },
+ { speaker: "kalk", text: "Zufriedenstellend. Der Abschluss ist gedruckt. Knapp ist ebenfalls eine Zeitangabe." }
+ ],
+ fail: [
+ { speaker: "brumm", text: "DER DRUCKER HAT GEWONNEN. GEGEN EINEN MENSCHEN. WAS KOSTET UNS DAS?!" }
+ ]
+ }
+ };
 
-  const opening = [
-    { speaker: "brumm", text: "MORGEN. Root ist KRANK. Du bist heute die IT. Fass nichts an, was funktioniert." },
-    { speaker: "brumm", text: "Und die Kaffeemaschine macht Geräusche. NICHT. ANFASSEN." },
-    { speaker: "root", text: "hey. falls du das liest: regel 1 — der drucker lügt. regel 2 — hdmi gehört an die gpu.", terminal: true },
-    { speaker: "root", text: "regel 3 — trau keinem mitglied der buchhaltung. viel glück. — r.", terminal: true }
-  ];
+ const opening = [
+ { speaker: "brumm", text: "MORGEN. Root ist KRANK. Du bist heute die IT. Fass nichts an, was funktioniert." },
+ { speaker: "brumm", text: "Und die Kaffeemaschine macht Geräusche. NICHT. ANFASSEN." },
+ { speaker: "root", text: "hey. falls du das liest: regel 1 — der drucker lügt. regel 2 — hdmi gehört an die gpu.", terminal: true },
+ { speaker: "root", text: "regel 3 — trau keinem mitglied der buchhaltung. viel glück. — r.", terminal: true }
+ ];
 
-  const phaseNames = [
-    [540, "MORGENSCHICHT"],
-    [630, "HARDWARE-WELLE"],
-    [720, "MITTAGS-CHAOS"],
-    [780, "SERVER-STUNDE"],
-    [870, "SHADOW-IT"],
-    [930, "KAFFEE-DÄMMERUNG"],
-    [1005, "DRUCKERDÄMMERUNG"]
-  ];
+ const phaseNames = [
+ [540, "MORGENSCHICHT"],
+ [630, "HARDWARE-WELLE"],
+ [720, "MITTAGS-CHAOS"],
+ [780, "SERVER-STUNDE"],
+ [870, "SHADOW-IT"],
+ [930, "KAFFEE-DÄMMERUNG"],
+ [1005, "DRUCKERDÄMMERUNG"]
+ ];
 
-  window.ITStory = {
-    quests,
-    coreEvents,
-    opening,
-    phaseNames,
-    totalQuestIds: [...quests.map((q) => q.id), coreEvents.server.id, coreEvents.coffee.id],
-    promotionMoodIds: ["kevin", "jana", "kalk", "mogel", "root", "kaffemat"]
-  };
+ window.ITStory = {
+ quests,
+ coreEvents,
+ opening,
+ phaseNames,
+ totalQuestIds: [...quests.map((q) => q.id), coreEvents.server.id, coreEvents.coffee.id],
+ promotionMoodIds: ["kevin", "jana", "kalk", "mogel", "root", "kaffemat"]
+ };
 })();
 
 </script>
@@ -1857,7 +2271,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
           } else {
             session.api.penalty(10, "Kevin bekam gefährliches Halbwissen");
             button.classList.add("wrong");
-            setMessage(session.root, "Sicher? 🤨 Fachlich wackelig.", "bad");
+            setMessage(session.root, "Fachlich wackelig. Kevin schreibt trotzdem mit.", "bad");
           }
           session.later(() => {
             index += 1;
@@ -1875,24 +2289,28 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
     let entered = 0;
     let errors = 0;
     let accepting = false;
-    let timeoutId;
 
     session.root.innerHTML = `
       <p class="game-instruction">${session.quest.instruction}</p>
       <div class="simon-layout">
         <div class="router" aria-label="Router mit vier Leuchttasten">
-          <div class="router-top"><span>ACME ROUTER 4B</span><span id="router-state">BOOT...</span></div>
+          <div class="router-top"><span class="router-model"><b>ACME ROUTER 4B</b><small>LED DIAGNOSTIC CONSOLE</small></span><span id="router-state" class="router-state">BEREIT</span></div>
           <div class="led-row">
             ${[0,1,2,3].map((i) => `<button class="router-led" data-led="${i}" data-color="${i}" type="button" aria-label="LED ${i+1}"></button>`).join("")}
           </div>
           <div class="router-labels"><span>WAN</span><span>2.4G</span><span>5G</span><span>GAST</span></div>
         </div>
-        <div class="game-message">Zuerst beobachten, dann nachtippen.</div>
+        <div class="router-controls">
+          <button id="start-sequence" class="primary-button" type="button">SIGNALTEST STARTEN</button>
+          <div class="sequence-note">Erst starten, wenn du bereit bist. Danach fünf Signale in gleicher Reihenfolge wiederholen.</div>
+        </div>
+        <div class="game-message">Lies die Aufgabe in Ruhe. Der Test beginnt erst nach deinem Tippen.</div>
       </div>`;
     const leds = [...session.root.querySelectorAll("[data-led]")];
     const stateLabel = session.root.querySelector("#router-state");
+    const startButton = session.root.querySelector("#start-sequence");
 
-    function light(i, duration = 330) {
+    function light(i, duration = 430) {
       leds[i].classList.add("on");
       session.api.sound("tick", 220 + i * 70);
       session.later(() => leds[i]?.classList.remove("on"), duration);
@@ -1902,16 +2320,28 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
       entered = 0;
       stateLabel.textContent = "MERKEN";
       session.api.setStatus("ZUSCHAUEN");
-      setMessage(session.root, "Der Router spricht fließend Blink.");
-      sequence.forEach((value, i) => session.later(() => light(value), 520 + i * 520));
+      setMessage(session.root, "Fünf Signale. Noch nicht tippen.");
+      sequence.forEach((value, i) => session.later(() => light(value), 420 + i * 650));
       session.later(() => {
         accepting = true;
         stateLabel.textContent = "EINGABE";
-        session.api.setStatus(`${entered}/${sequence.length}`);
+        session.api.setStatus(`0/${sequence.length}`);
         setMessage(session.root, "Jetzt dieselbe Reihenfolge tippen.", "good");
-      }, 520 + sequence.length * 520);
+      }, 420 + sequence.length * 650 + 420);
+    }
+    function beginRound() {
+      if (startButton.disabled || accepting) return;
+      startButton.disabled = true;
+      startButton.hidden = true;
+      stateLabel.textContent = "START 3";
+      session.api.setStatus("START IN 3");
+      setMessage(session.root, "Bereitmachen: 3 … 2 … 1 …");
+      session.later(() => { stateLabel.textContent="START 2"; session.api.setStatus("START IN 2"); },700);
+      session.later(() => { stateLabel.textContent="START 1"; session.api.setStatus("START IN 1"); },1400);
+      session.later(playSequence,2200);
     }
 
+    session.on(startButton,"click",beginRound);
     leds.forEach((led) => {
       session.on(led, "click", () => {
         if (!accepting) return;
@@ -1930,121 +2360,89 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
           accepting = false;
           session.api.penalty(10, "Falsche Router-Sequenz");
           stateLabel.textContent = "FEHLER";
-          setMessage(session.root, `Falsches Licht. Versuch ${errors}/3.`, "bad");
-          if (errors >= 3) session.later(() => session.finish(false, { errors }), 650);
-          else session.later(playSequence, 900);
+          setMessage(session.root, `Falsches Signal. Versuch ${errors}/3. Du startest die Wiederholung selbst.`, "bad");
+          if (errors >= 3) session.later(() => session.finish(false, { errors }), 700);
+          else {
+            startButton.textContent = "SEQUENZ NOCHMAL ZEIGEN";
+            startButton.hidden = false;
+            startButton.disabled = false;
+          }
         }
       });
     });
-    timeoutId = session.later(() => session.finish(false, { reason: "timeout", errors }), 38000);
-    session.addCleanup(() => window.clearTimeout(timeoutId));
-    playSequence();
+    session.later(() => session.finish(false, { reason:"timeout", errors }), 90000);
   }
 
   function hdmi(session) {
     let flips = 0;
-    let dragOrigin = null;
     let dragStart = null;
 
     session.root.innerHTML = `
       <p class="game-instruction">${session.quest.instruction}</p>
-      <div class="pc-workbench">
-        <div class="pc-back" aria-label="Rückseite eines Desktop-PCs">
-          <div class="psu"><div class="fan" aria-hidden="true"></div></div>
-          <div class="io-panel">
-            <div class="port usb" data-port="usb">USB</div>
+      <div class="pc-workbench hardware-workbench">
+        <div class="pc-back hardware-back" aria-label="Detaillierte Rückseite eines Desktop-PCs">
+          <span class="case-screw screw-a"></span><span class="case-screw screw-b"></span><span class="case-screw screw-c"></span><span class="case-screw screw-d"></span>
+          <div class="case-id"><span>ACME WS-24</span><span>REAR I/O · REV C</span></div>
+          <div class="psu-block"><div class="iec-socket"></div><div class="psu-switch">I/O</div><div class="fan-grill"><i class="fan-hub"></i></div><span class="psu-label">650 W · 100–240 V</span></div>
+          <div class="io-shield">
+            <div class="port usb" data-port="usb">USB 2</div>
             <div class="port lan" data-port="lan">LAN</div>
-            <div class="port hdmi trap" data-port="mainboard-hdmi">HDMI</div>
+            <div class="port hdmi trap" data-port="mainboard-hdmi">MB HDMI</div>
+            <div class="port usb" data-port="usb">USB 3</div>
+            <div class="port audio" data-port="audio">AUX</div>
             <div class="port vga" data-port="vga">VGA</div>
-            <div class="port audio" data-port="audio">●</div>
-            <div class="port usb" data-port="usb">USB</div>
+            <span class="io-caption">MAINBOARD I/O — OHNE AKTIVE iGPU</span>
           </div>
-          <div class="slot-lines" aria-hidden="true"></div>
+          <div class="expansion-bank"><div class="blank-slot"></div><div class="blank-slot"></div><div class="blank-slot"></div><div class="blank-slot"></div><div class="blank-slot"></div><span class="slot-note">PCIe EXPANSION</span></div>
           <div class="gpu-panel">
-            <span class="pixel-tag">GPU</span>
-            <div class="port hdmi" data-port="gpu-hdmi">HDMI</div>
-            <div class="port dp" data-port="displayport">DP</div>
-            <div class="port dp" data-port="displayport">DP</div>
+            <span class="gpu-label"><b>GPU-01</b><small>DEDICATED DISPLAY OUTPUTS</small></span>
+            <div class="port hdmi target-port" data-port="gpu-hdmi">HDMI</div>
+            <div class="port dp" data-port="displayport">DP-1</div>
+            <div class="port dp" data-port="displayport">DP-2</div>
           </div>
         </div>
-        <div class="cable-zone">
-          <div id="hdmi-cable" class="cable" role="button" tabindex="0" aria-label="HDMI-Stecker ziehen">HDMI</div>
-          <button id="flip-hdmi" class="secondary-button flip-button" type="button">↻ STECKER DREHEN</button>
-          <span class="flip-counter">Drehungen: <b id="flip-count">0</b> / 2+</span>
-          <div class="game-message">Root: „der port weiter unten. wirklich.“</div>
+        <div class="cable-zone hardware-cable-zone">
+          <div class="connector-card">
+            <div class="connector-spec"><b>HDMI TYPE-A</b><span>19 PIN</span></div>
+            <div id="hdmi-cable" class="cable detailed-hdmi" role="button" tabindex="0" aria-label="HDMI-Stecker ziehen"><i class="metal-shell"></i><i class="pin-bank"></i><span class="plug-label">MONITOR CABLE</span></div>
+            <div class="orientation-readout">AUSRICHTUNG: <b id="hdmi-orientation">KONTAKTE UNTEN</b></div>
+          </div>
+          <button id="flip-hdmi" class="secondary-button flip-button" type="button">STECKER DREHEN</button>
+          <div class="game-message">Tipp: Der Monitor gehört an die dedizierte Grafikkarte, nicht an das Mainboard.</div>
         </div>
       </div>`;
 
     const cable = session.root.querySelector("#hdmi-cable");
     const ports = [...session.root.querySelectorAll("[data-port]")];
-    const flipCount = session.root.querySelector("#flip-count");
-
-    function updateCableTransform(dx = 0, dy = 0) {
-      cable.style.transform = `translate(${dx}px, ${dy}px) rotate(${flips % 2 ? 180 : 0}deg)`;
-    }
+    const orientation = session.root.querySelector("#hdmi-orientation");
+    function correctlyOriented(){ return flips % 2 === 1; }
+    function updateCableTransform(dx = 0, dy = 0) { cable.style.transform = `translate(${dx}px, ${dy}px) rotate(${flips % 2 ? 180 : 0}deg)`; }
     function flip() {
       flips += 1;
-      flipCount.textContent = flips;
+      orientation.textContent = correctlyOriented()?"KONTAKTE OBEN · OK":"KONTAKTE UNTEN";
       updateCableTransform();
-      session.api.sound("tick", 180 + flips * 25);
-      setMessage(session.root, flips >= 2 ? "Orientierung plausibel. Jetzt zur Grafikkarte ziehen." : "Einmal gedreht. USB-Logik sagt: noch einmal.", flips >= 2 ? "good" : "");
+      session.api.sound("tick", 180 + flips * 20);
+      setMessage(session.root, correctlyOriented()?"Ausrichtung passt. Jetzt GPU-HDMI wählen oder hineinziehen.":"Stecker wieder verkehrt herum.", correctlyOriented()?"good":"");
     }
-    session.on(session.root.querySelector("#flip-hdmi"), "click", flip);
-    session.on(cable, "keydown", (event) => { if (event.key === "r") flip(); });
-
-    bindDrag(session, cable, {
-      start(point) {
-        dragOrigin = cable.getBoundingClientRect();
-        dragStart = point;
-        cable.classList.add("dragging");
-        session.api.sound("tick", 150);
-      },
-      move(point) {
-        const dx = point.x - dragStart.x;
-        const dy = point.y - dragStart.y;
-        updateCableTransform(dx, dy);
-        ports.forEach((port) => {
-          const r = port.getBoundingClientRect();
-          const distance = Math.hypot(point.x - (r.left+r.width/2), point.y - (r.top+r.height/2));
-          port.classList.toggle("near", distance < 72);
-        });
-      },
-      end(point) {
-        cable.classList.remove("dragging");
-        ports.forEach((p) => p.classList.remove("near"));
-        cable.style.pointerEvents = "none";
-        const target = document.elementFromPoint(point.x, point.y)?.closest?.("[data-port]");
-        cable.style.pointerEvents = "";
-        updateCableTransform();
-        if (!target) {
-          setMessage(session.root, "Der Stecker hängt jetzt philosophisch im Raum.");
-          return;
-        }
-        const port = target.dataset.port;
-        if (port === "gpu-hdmi") {
-          if (flips >= 2) {
-            target.classList.add("near");
-            setMessage(session.root, "KLICK. Bildsignal an der dedizierten GPU!", "good");
-            session.api.sound("good");
-            session.later(() => session.finish(true, { flips }), 550);
-          } else {
-            session.api.penalty(5, "HDMI-Stecker falsch orientiert");
-            setMessage(session.root, "Fast. Der Stecker schaut noch in die falsche Realität.", "bad");
-          }
-          return;
-        }
-        const responses = {
-          "mainboard-hdmi": [15, "Mainboard-HDMI: Die Falle schnappt zu. Kein Bild."],
-          displayport: [10, "DisplayPort ist HDMI mit anderer Frisur. Passt trotzdem nicht."],
-          vga: [10, "VGA stammt aus einer Zeit, in der Pixel noch Grundstücke waren."],
-          usb: [10, "HDMI in USB: mutig, aber geometrisch schwierig."],
-          lan: [10, "Das Internet braucht kein HDMI-Kabel."],
-          audio: [10, "Der Monitor soll Bild, nicht Jazz bekommen."]
-        };
-        const [penalty, text] = responses[port] || [10, "Falscher Port."];
-        session.api.penalty(penalty, text);
-        setMessage(session.root, text, "bad");
+    function tryPort(target){
+      if(!target) return setMessage(session.root,"Kein Anschluss getroffen.");
+      const port=target.dataset.port;
+      if(port==="gpu-hdmi"){
+        if(correctlyOriented()){
+          target.classList.add("near");setMessage(session.root,"KLICK. HDMI sitzt in der Grafikkarte; Bildsignal steht.","good");session.api.sound("good");session.later(()=>session.finish(true,{flips}),550);
+        }else{session.api.penalty(5,"HDMI-Stecker falsch orientiert");setMessage(session.root,"Richtiger Port, aber die Kontaktseite zeigt falsch.","bad");}
+        return;
       }
+      const responses={"mainboard-hdmi":[15,"Mainboard-HDMI liefert ohne aktive iGPU kein Bild."],displayport:[8,"Das ist DisplayPort; die Steckerform passt nicht."],vga:[8,"VGA ist analog und kein Ziel für diesen Stecker."],usb:[8,"USB-A und HDMI haben unterschiedliche Geometrie."],lan:[8,"RJ45 ist der Netzwerkanschluss."],audio:[8,"3,5-mm-Audio überträgt hier kein Bild."]};
+      const [penalty,text]=responses[port]||[8,"Falscher Anschluss."];session.api.penalty(penalty,text);setMessage(session.root,text,"bad");
+    }
+    session.on(session.root.querySelector("#flip-hdmi"),"click",flip);
+    session.on(cable,"keydown",event=>{if(event.key==="r")flip();});
+    ports.forEach(port=>session.on(port,"click",()=>tryPort(port)));
+    bindDrag(session,cable,{
+      start(point){dragStart=point;cable.classList.add("dragging");session.api.sound("tick",150);},
+      move(point){updateCableTransform(point.x-dragStart.x,point.y-dragStart.y);ports.forEach(port=>{const r=port.getBoundingClientRect();port.classList.toggle("near",Math.hypot(point.x-(r.left+r.width/2),point.y-(r.top+r.height/2))<68);});},
+      end(point){cable.classList.remove("dragging");ports.forEach(p=>p.classList.remove("near"));cable.style.pointerEvents="none";const target=document.elementFromPoint(point.x,point.y)?.closest?.("[data-port]");cable.style.pointerEvents="";updateCableTransform();tryPort(target);}
     });
   }
 
@@ -2053,58 +2451,45 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
     let startPoint;
     session.root.innerHTML = `
       <p class="game-instruction">${session.quest.instruction}</p>
-      <div class="usb-bench">
-        <div>
-          <div id="usb-plug" class="usb-plug upside" role="button" tabindex="0" aria-label="USB-Stecker ziehen">USB</div>
-          <button id="rotate-usb" class="secondary-button idle-button" type="button">↻ USB DREHEN</button>
-          <div class="game-message">Aktuelle Orientierung: klassisch falsch.</div>
+      <div class="usb-bench hardware-bench">
+        <div class="device-card">
+          <div class="device-label"><span>ACME OPTICAL MOUSE</span><span>USB-A · 5 V</span></div>
+          <div class="mouse-unit"><i class="mouse-led"></i></div>
+          <div id="usb-plug" class="usb-plug detailed-usb upside" role="button" tabindex="0" aria-label="USB-A-Stecker ziehen"><i class="usb-contact-row"></i><span class="usb-mark">USB TYPE-A</span></div>
+          <button id="rotate-usb" class="secondary-button idle-button" type="button">STECKER DREHEN</button>
+          <div class="game-message">Ausrichtung: Kontaktzunge unten. Einmal drehen.</div>
         </div>
-        <div class="usb-tower">
-          <div class="usb-target" data-usb="audio">KOPFHÖRER</div>
-          <div class="usb-target correct" data-usb="usb-blue">USB 3.0</div>
-          <div class="usb-target" data-usb="lan">LAN</div>
-          <div class="usb-target" data-usb="display">DISPLAY</div>
+        <div class="usb-tower hardware-tower">
+          <div class="tower-label">ACME MINI-TOWER · FRONT I/O</div><div class="power-key"></div>
+          <div class="front-io">
+            <div class="usb-target audio" data-usb="audio">HEADSET<span class="port-meta">3,5 MM AUDIO</span></div>
+            <div class="usb-target correct" data-usb="usb-blue">USB 3.0<span class="port-meta">TYPE-A · SUPER SPEED</span></div>
+            <div class="usb-target type-c" data-usb="display">USB-C<span class="port-meta">TYPE-C · SERVICE</span></div>
+            <div class="usb-target sd" data-usb="lan">SD SLOT<span class="port-meta">MEMORY CARD</span></div>
+          </div>
         </div>
       </div>`;
-    const plug = session.root.querySelector("#usb-plug");
-    const targets = [...session.root.querySelectorAll("[data-usb]")];
-    function transform(dx = 0, dy = 0) { plug.style.transform = `translate(${dx}px,${dy}px) rotate(${flips % 2 ? 0 : 180}deg)`; }
-    function rotate() {
-      flips += 1;
-      transform();
-      setMessage(session.root, flips % 2 ? "Diese Seite fühlt sich verdächtig richtig an." : "Und wieder falsch. USB bleibt USB.", flips % 2 ? "good" : "");
-      session.api.sound("tick", 190);
-    }
-    session.on(session.root.querySelector("#rotate-usb"), "click", rotate);
-    bindDrag(session, plug, {
-      start(point) { startPoint = point; plug.classList.add("dragging"); },
-      move(point) {
-        transform(point.x-startPoint.x, point.y-startPoint.y);
-        targets.forEach((target) => {
-          const r = target.getBoundingClientRect();
-          target.classList.toggle("glow", Math.hypot(point.x-(r.left+r.width/2),point.y-(r.top+r.height/2)) < 75);
-        });
-      },
-      end(point) {
-        plug.classList.remove("dragging");
-        targets.forEach((t) => t.classList.remove("glow"));
-        plug.style.pointerEvents = "none";
-        const target = document.elementFromPoint(point.x,point.y)?.closest?.("[data-usb]");
-        plug.style.pointerEvents = "";
-        transform();
-        if (!target) return setMessage(session.root, "Die Maus bleibt drahtlos – nur leider ohne Funk.");
-        if (target.dataset.usb === "usb-blue" && flips % 2 === 1) {
-          target.classList.add("glow");
-          setMessage(session.root, "KLICK. Die Maus erwacht.", "good");
-          session.later(() => session.finish(true, { flips }), 500);
-        } else if (target.dataset.usb === "usb-blue") {
-          session.api.penalty(5, "USB falsch herum");
-          setMessage(session.root, "Der richtige Port, die falsche Seite. USB-Tradition.", "bad");
-        } else {
-          session.api.penalty(8, "USB im falschen Anschluss");
-          setMessage(session.root, "Dieser Anschluss hat andere Lebenspläne.", "bad");
-        }
+    const plug=session.root.querySelector("#usb-plug");
+    const targets=[...session.root.querySelectorAll("[data-usb]")];
+    function correctlyOriented(){return flips%2===1;}
+    function transform(dx=0,dy=0){plug.style.transform=`translate(${dx}px,${dy}px) rotate(${correctlyOriented()?0:180}deg)`;}
+    function rotate(){flips+=1;transform();setMessage(session.root,correctlyOriented()?"Kontaktzunge oben. Jetzt den blauen USB-3.0-Port wählen.":"Kontaktzunge wieder unten.",correctlyOriented()?"good":"");session.api.sound("tick",190);}
+    function tryTarget(target){
+      if(!target)return setMessage(session.root,"Kein Anschluss getroffen.");
+      if(target.dataset.usb==="usb-blue"&&correctlyOriented()){
+        target.classList.add("glow");setMessage(session.root,"KLICK. USB-A sitzt; die Maus meldet sich an.","good");session.later(()=>session.finish(true,{flips}),500);
+      }else if(target.dataset.usb==="usb-blue"){
+        session.api.penalty(5,"USB falsch herum");setMessage(session.root,"Richtiger Port, Kontaktzunge noch auf der falschen Seite.","bad");
+      }else{
+        session.api.penalty(8,"USB im falschen Anschluss");setMessage(session.root,"Steckerform und Buchse passen nicht zusammen.","bad");
       }
+    }
+    session.on(session.root.querySelector("#rotate-usb"),"click",rotate);
+    targets.forEach(target=>session.on(target,"click",()=>tryTarget(target)));
+    bindDrag(session,plug,{
+      start(point){startPoint=point;plug.classList.add("dragging");},
+      move(point){transform(point.x-startPoint.x,point.y-startPoint.y);targets.forEach(target=>{const r=target.getBoundingClientRect();target.classList.toggle("glow",Math.hypot(point.x-(r.left+r.width/2),point.y-(r.top+r.height/2))<70);});},
+      end(point){plug.classList.remove("dragging");targets.forEach(t=>t.classList.remove("glow"));plug.style.pointerEvents="none";const target=document.elementFromPoint(point.x,point.y)?.closest?.("[data-usb]");plug.style.pointerEvents="";transform();tryTarget(target);}
     });
   }
 
@@ -2352,7 +2737,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
       <div id="virus-desktop" class="virus-desktop">
         <div class="desktop-taskbar"><span class="desktop-start">☷ START</span><span style="margin-left:auto">MOGEL-PC · NICHT VERTRAUENSWÜRDIG</span></div>
       </div>
-      <div class="game-message">Viren: 😈 👾 🦠 · Systemdateien: 📁 💾 ⚙️</div>`;
+      <div class="game-message">MAGENTA = Malware · GELB = Systemdatei. Nur Malware isolieren.</div>`;
     const desktop = session.root.querySelector("#virus-desktop");
 
     function particles(x,y) {
@@ -2370,12 +2755,10 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
       if (session.ended) return;
       const isVirus = Math.random() > .32;
       const icon = document.createElement("button");
-      const virusIcons = ["😈","👾","🦠"];
-      const systemIcons = ["📁","💾","⚙️"];
       icon.type="button";
-      icon.className="desktop-icon";
+      icon.className=`desktop-icon ${isVirus?"malware-file":"system-file"}`;
       icon.dataset.kind=isVirus?"virus":"system";
-      icon.innerHTML=`${(isVirus?virusIcons:systemIcons)[Math.floor(Math.random()*3)]}<small>${isVirus?"free_game.exe":"SYSTEM"}</small>`;
+      icon.innerHTML=`<i class="pixel-file-icon ${isVirus?"malware":"system"}"></i><small>${isVirus?"FREE_GAME.EXE":"SYSTEM"}</small>`;
       const maxX=Math.max(20,desktop.clientWidth-70);
       const maxY=Math.max(60,desktop.clientHeight-110);
       icon.style.left=`${10+Math.random()*(maxX-10)}px`;
@@ -2434,8 +2817,8 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
           <div class="mail-body">${mail.body}</div>
         </article>
         <div class="classify-actions">
-          <button class="secondary-button" data-classify="real" type="button">✓ ECHT</button>
-          <button class="danger-button" data-classify="phishing" type="button">⚠ PHISHING</button>
+          <button class="secondary-button" data-classify="real" type="button">ECHT</button>
+          <button class="danger-button" data-classify="phishing" type="button">PHISHING</button>
         </div>
         <div class="game-message">Prüfe Absenderdomain, Zeitdruck und ungewöhnliche Forderungen.</div>`;
       session.root.querySelectorAll("[data-classify]").forEach(button=>session.on(button,"click",()=>{
@@ -2568,7 +2951,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
       session.api.setStatus("PHASE 2/3");
       frame(`<h3>PHASE 2 · TONER</h3><p>Druckerlogik: Kartusche zweimal drehen, dann einsetzen.</p>
         <div id="toner" class="toner-cartridge">TONER_CMYK</div>
-        <div class="swipe-actions"><button id="turn-toner" class="secondary-button" type="button">↻ DREHEN</button><button id="install-toner" class="primary-button" type="button">EINSETZEN</button></div>`,"MAGENTA IST EINE HALTUNG.");
+        <div class="swipe-actions"><button id="turn-toner" class="secondary-button" type="button">DREHEN  DREHEN</button><button id="install-toner" class="primary-button" type="button">EINSETZEN</button></div>`,"MAGENTA IST EINE HALTUNG.");
       const toner=session.root.querySelector("#toner");
       session.on(session.root.querySelector("#turn-toner"),"click",()=>{
         tonerFlips+=1;toner.classList.toggle("rotated",tonerFlips%2===1);session.api.sound("tick",200+tonerFlips*30);
@@ -2719,6 +3102,9 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
   let activeGameCleanup = null;
   let dialogue = null;
   let dialogueTypingTimer = null;
+  let nextWorkTimer = null;
+  let nextWorkDeadline = 0;
+  const COFFEE_DRAIN_MS = 6000;
 
   function later(fn, ms) {
     const id = setTimeout(() => { transientTimers.delete(id); fn(); }, ms);
@@ -2730,6 +3116,8 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
     globalIntervals = [];
     transientTimers.forEach(id => { clearTimeout(id); clearInterval(id); });
     transientTimers.clear();
+    nextWorkTimer = null;
+    nextWorkDeadline = 0;
     clearInterval(dialogueTypingTimer);
     dialogueTypingTimer = null;
   }
@@ -2765,7 +3153,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
     ui.questCounter.textContent = `${solvedCount()}/${Story.totalQuestIds.length} GELÖST`;
   }
   function updateMuteButtons() {
-    const icon = Audio.muted ? "🔇" : "🔊";
+    const icon = Audio.muted ? "SFX×" : "SFX";
     const label = Audio.muted ? "Ton einschalten" : "Ton ausschalten";
     [ui.startMute,ui.hudMute].forEach(button => { button.textContent=icon; button.title=label; button.setAttribute("aria-label",label); });
   }
@@ -2862,6 +3250,47 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
     return [["server",Story.coreEvents.server],["coffee",Story.coreEvents.coffee],["boss",Story.coreEvents.printer]]
       .find(([flag,quest])=>!state.eventFlags[flag]&&state.time>=quest.releaseAt)||null;
   }
+  function cancelNextWork() {
+    if (!nextWorkTimer) return;
+    clearTimeout(nextWorkTimer);
+    transientTimers.delete(nextWorkTimer);
+    nextWorkTimer = null;
+    nextWorkDeadline = 0;
+  }
+  function nextWorkCandidate() {
+    const regular = [...Story.quests]
+      .filter(quest => !state.released[quest.id] && !state.completed[quest.id] && (!quest.unlockAfter || state.completed[quest.unlockAfter]))
+      .map(quest => ({ flag:null, quest }));
+    const fixed = [["server",Story.coreEvents.server],["coffee",Story.coreEvents.coffee],["boss",Story.coreEvents.printer]]
+      .filter(([flag]) => !state.eventFlags[flag])
+      .map(([flag,quest]) => ({ flag, quest }));
+    return [...regular,...fixed].sort((a,b)=>a.quest.order-b.quest.order)[0] || null;
+  }
+  function deliverNextWork() {
+    nextWorkTimer = null;
+    nextWorkDeadline = 0;
+    if (state.mode!=="board" || state.ending || state.active.length || state.backlog.length) return;
+    const item = nextWorkCandidate();
+    if (!item) return;
+    if (state.time < item.quest.releaseAt) state.time = item.quest.releaseAt;
+    updateHud();
+    if (item.flag) { startMandatory(item.flag,item.quest); return; }
+    dispatchQuest(item.quest);
+    renderBoard();
+  }
+  function scheduleNextWork() {
+    if (nextWorkTimer || state.mode!=="board" || state.ending || state.active.length || state.backlog.length) return;
+    if (!nextWorkCandidate()) return;
+    const delay = 3000 + Math.floor(Math.random()*5001);
+    nextWorkDeadline = Date.now()+delay;
+    nextWorkTimer = later(deliverNextWork,delay);
+    const status = $("#next-ticket-status",ui.stage);
+    if (status) status.textContent = `AUTO · ${Math.ceil(delay/1000)} SEK MAX.`;
+  }
+  function forceNextWork() {
+    cancelNextWork();
+    deliverNextWork();
+  }
   function checkSchedule(){
     if(state.mode!=="board"||state.ending)return{interrupted:false,changed:false};
     const mandatory=nextMandatory();
@@ -2891,12 +3320,13 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
     const segment=Math.max(0,Math.min(7,Math.floor((state.time-540)/60)));
     const moodIds=["kevin","jana","kalk","mogel","root","kaffemat"];
     const logs=state.logs.slice(-7).map((line,i,a)=>`<p class="${i<a.length-3?"dim":""}"><b>&gt;</b> ${line}</p>`).join("");
-    const empty=`<div class="empty-queue"><div><div class="radar"></div><b>POSTEINGANG RUHIG</b><p>Das ist verdächtiger als drei offene Tickets.</p></div></div>`;
+    const empty=`<div class="empty-queue"><div><div class="queue-pulse"></div><b>LEITUNG FREI</b><p>Die nächste Anfrage wird in wenigen Sekunden verbunden.</p></div></div>`;
+    const idleControl=!state.active.length?`<button id="idle-skip" class="secondary-button idle-button wait-button" type="button">NÄCHSTES TICKET JETZT <small id="next-ticket-status">AUTO · MAX. 8 SEK.</small></button>`:"";
     ui.stage.innerHTML=`<section class="board-screen">
       <div class="ticket-column">
-        <div class="board-heading"><div><h2>NERDPHONE · ANFRAGEN</h2><p>Maximal 3 sichtbar. Du bestimmst die Reihenfolge – und trägst die Folgen.</p></div><span class="queue-chip">${state.active.length}/3 AKTIV · ${state.backlog.length} WARTEND</span></div>
+        <div class="board-heading"><div><h2>TICKET-EINGANG</h2><p>Maximal 3 sichtbar. Reihenfolge und Reaktionszeit liegen bei dir.</p></div><span class="queue-chip">${state.active.length}/3 AKTIV · ${state.backlog.length} WARTEND</span></div>
         <div class="ticket-list">${cards||empty}</div>
-        <button id="idle-skip" class="secondary-button idle-button" type="button">▸ 10 MINUTEN LOGS BEOBACHTEN <small>(Tickets altern)</small></button>
+        ${idleControl}
       </div>
       <aside class="side-column">
         <section class="side-card timeline"><div class="side-card-header"><span>SCHICHTVERLAUF</span><span data-board-time>${formatTime(state.time)}</span></div><div class="timeline-track">${Array.from({length:8},(_,i)=>`<i data-time-segment="${i}" class="${i<segment?"passed":i===segment?"current":""}"></i>`).join("")}</div><div class="timeline-labels"><span>09</span><span>11</span><span>13</span><span>15</span><span>17</span></div></section>
@@ -2905,7 +3335,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
       </aside>
     </section>`;
     $$('[data-accept]',ui.stage).forEach(button=>button.addEventListener("click",()=>acceptQuest(button.dataset.accept),{once:true}));
-    $("#idle-skip",ui.stage)?.addEventListener("click",()=>{state.stats.idleSkips+=1;addLog("du: 10 minuten professionell auf logs geschaut.");changeCoffee(-2);if(!state.ending)advanceTime(10);},{once:true});
+    $("#idle-skip",ui.stage)?.addEventListener("click",()=>{state.stats.idleSkips+=1;addLog("du: nächste leitung manuell angenommen.");forceNextWork();},{once:true});
     state.active.forEach(ensureTicketTyping); Characters.renderAll(ui.stage);
   }
   function advanceTime(minutes){
@@ -2921,7 +3351,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
     globalIntervals.forEach(clearInterval);
     globalIntervals=[
       setInterval(()=>{if(state.activeRun&&state.mode==="board"&&!state.ending)advanceTime(1);},2000),
-      setInterval(()=>{if(state.activeRun&&!state.ending&&!['start','ending'].includes(state.mode))changeCoffee(-1);},2000)
+      setInterval(()=>{if(state.activeRun&&!state.ending&&['board','minigame'].includes(state.mode))changeCoffee(-1);},COFFEE_DRAIN_MS)
     ];
   }
 
@@ -2957,6 +3387,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
   function enterBoard(){
     if(state.ending)return;state.mode="board";state.currentQuest=null;
     const scheduled=checkSchedule();if(!scheduled.interrupted)renderBoard();updateHud();
+    if(!scheduled.interrupted)scheduleNextWork();
   }
   function acceptQuest(id){
     if(state.mode!=="board"||state.ending||!state.active.includes(id))return;
@@ -2967,10 +3398,11 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
   }
   function startMandatory(flag,quest){
     if(state.ending||state.eventFlags[flag])return;
+    cancelNextWork();
     state.eventFlags[flag]=true;state.released[quest.id]=true;state.currentQuest=quest.id;
-    if(flag==="server"){addLog("ALARM: prod-01 antwortet nur noch in ERRORs.");toast("⚠ PFLICHT-EVENT: SERVER-ALARM","bad");Audio.play("bad");}
-    else if(flag==="coffee"){addLog("kaffemat3000: ICH HABE GETRÄUMT.");toast("☕ KAFFEMAT 3000 fordert Wartung","warn");Audio.play("message");}
-    else{addLog("drucko5000: PC LOAD LETTER.");toast("🖨 16:45 · DRUCKO 5000 ERWACHT","bad");Audio.play("boss");}
+    if(flag==="server"){addLog("ALARM: prod-01 antwortet nur noch in ERRORs.");toast("[ALARM] SERVER-AUSFALL","bad");Audio.play("bad");}
+    else if(flag==="coffee"){addLog("kaffemat3000: ICH HABE GETRÄUMT.");toast("KAFFEMAT 3000 · WARTUNG","warn");Audio.play("message");}
+    else{addLog("drucko5000: PC LOAD LETTER.");toast("16:45 · DRUCKO 5000 ONLINE","bad");Audio.play("boss");}
     showDialogue(quest.intro,()=>runMinigame(quest));
   }
 
@@ -3017,17 +3449,17 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
 
   /* ---------- Endings ---------- */
   function rankForPatience(){
-    if(state.patience>80)return{title:"ROOT-GOTT 👑",copy:"Du hast nicht nur überlebt – du hast das Büro administriert, ohne sichtbar zu weinen.",stamp:"ROOT-GOTT"};
-    if(state.patience>40)return{title:"SYSADMIN 🖥",copy:"Der Betrieb läuft. Niemand weiß genau warum. Das ist professionelle IT.",stamp:"ÜBERLEBT"};
-    return{title:"MAUS-SCHUBSER 🐭",copy:"Der Tag ist geschafft. Chef Brumm auch. Morgen bitte weniger Rauch.",stamp:"KNAPP ÜBERLEBT"};
+    if(state.patience>80)return{title:"ROOT-GOTT",copy:"Du hast nicht nur überlebt – du hast das Büro administriert, ohne sichtbar zu weinen.",stamp:"ROOT-GOTT"};
+    if(state.patience>40)return{title:"SYSADMIN",copy:"Der Betrieb läuft. Niemand weiß genau warum. Das ist professionelle IT.",stamp:"ÜBERLEBT"};
+    return{title:"MAUS-SCHUBSER",copy:"Der Tag ist geschafft. Chef Brumm auch. Morgen bitte weniger Rauch.",stamp:"KNAPP ÜBERLEBT"};
   }
   function endingData(reason){
-    if(reason==="fired")return{title:"GEFEUERT 📦",copy:"Chef Brumm hat genug. Dein Firmenkonto wurde schneller deaktiviert als Mogels Antivirus.",stamp:"VERTRAG BEENDET",kind:"bad"};
-    if(reason==="asleep")return{title:"EINGESCHLAFEN 😴",copy:"Zu wenig Koffein. Du wachst unter dem Schreibtisch auf. Root nennt es Energiesparmodus.",stamp:"KAFFEE 0%",kind:"bad"};
+    if(reason==="fired")return{title:"GEFEUERT",copy:"Chef Brumm hat genug. Dein Firmenkonto wurde schneller deaktiviert als Mogels Antivirus.",stamp:"VERTRAG BEENDET",kind:"bad"};
+    if(reason==="asleep")return{title:"EINGESCHLAFEN",copy:"Zu wenig Koffein. Du wachst unter dem Schreibtisch auf. Root nennt es Energiesparmodus.",stamp:"KAFFEE 0%",kind:"bad"};
     const allSuccess=Story.totalQuestIds.every(id=>state.completed[id]?.success);
     const happy=Story.promotionMoodIds.every(id=>moodFor(id)==="happy");
-    if(allSuccess&&happy)return{title:"BEFÖRDERUNG 🏆",copy:"Alle Tickets gelöst, alle Kolleg:innen zufrieden. Chef Brumm befördert dich zur gesamten IT-Abteilung – diesmal offiziell.",stamp:"BEFÖRDERT",kind:"good"};
-    if(state.kaffematPerfect)return{title:"KAFFEMAT 3000 ÜBERNIMMT ☕🤖",copy:"Perfekte Extraktion aktiviert BARISTA-OMEGA. KAFFEMAT übernimmt die Geschäftsführung. Erster Beschluss: kostenlose Doppel-Espressi.",stamp:"NEUE LEITUNG",kind:"secret"};
+    if(allSuccess&&happy)return{title:"BEFÖRDERUNG",copy:"Alle Tickets gelöst, alle Kolleg:innen zufrieden. Chef Brumm befördert dich zur gesamten IT-Abteilung – diesmal offiziell.",stamp:"BEFÖRDERT",kind:"good"};
+    if(state.kaffematPerfect)return{title:"KAFFEMAT 3000 ÜBERNIMMT",copy:"Perfekte Extraktion aktiviert BARISTA-OMEGA. KAFFEMAT übernimmt die Geschäftsführung. Erster Beschluss: kostenlose Doppel-Espressi.",stamp:"NEUE LEITUNG",kind:"secret"};
     return{...rankForPatience(),kind:"normal"};
   }
   function endDay(reason){
@@ -3055,7 +3487,7 @@ h1>small{margin-top:8px;font-size:clamp(13px,4vw,18px)}
   }
   function startGame(){
     resetState();Audio.init();ui.start.hidden=true;ui.end.hidden=true;ui.shell.hidden=false;state.mode="dialogue";updateHud();
-    ui.stage.innerHTML=`<div class="empty-queue" style="height:100%;border:0"><div><div class="radar"></div><b>NERDDESK WIRD GESTARTET…</b></div></div>`;
+    ui.stage.innerHTML=`<div class="empty-queue" style="height:100%;border:0"><div><div class="radar"></div><b>HELPDESK WIRD GESTARTET…</b></div></div>`;
     showDialogue(Story.opening,()=>{state.time=545;state.activeRun=true;startTimers();enterBoard();});
   }
   function showStart(){resetState();state.mode="start";ui.start.hidden=false;ui.shell.hidden=true;ui.end.hidden=true;Characters.renderAll(ui.start);}

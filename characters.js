@@ -200,7 +200,7 @@
     }
   };
 
-  const moodEmoji = { happy: "😀", neutral: "😐", angry: "😡" };
+  const moodEmoji = { happy: "OK", neutral: "--", angry: "!!" };
 
   function normalizeRow(row) {
     return String(row).slice(0, SIZE).padEnd(SIZE, "0");

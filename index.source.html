@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
-  <meta name="it-survival-build" content="mobile-v2-2026-08-05">
+  <meta name="it-survival-build" content="mobile-v3-2026-08-06">
   <meta name="description" content="IT-SURVIVAL: Der 9-to-5 Simulator – ein Touch-first Retro-Browsergame für Smartphones.">
   <title>IT-SURVIVAL: Der 9-to-5 Simulator</title>
   <script>
@@ -17,11 +17,11 @@
       if (line) line.textContent = "SPIELMODUL FEHLT – bitte das neue Komplettpaket hochladen.";
     };
   </script>
-  <link rel="stylesheet" href="./style.css?v=mobile-v2">
-  <script defer src="./characters.js?v=mobile-v2"></script>
-  <script defer src="./story.js?v=mobile-v2"></script>
-  <script defer src="./minigames.js?v=mobile-v2"></script>
-  <script defer src="./game.js?v=mobile-v2"></script>
+  <link rel="stylesheet" href="./style.css?v=mobile-v3">
+  <script defer src="./characters.js?v=mobile-v3"></script>
+  <script defer src="./story.js?v=mobile-v3"></script>
+  <script defer src="./minigames.js?v=mobile-v3"></script>
+  <script defer src="./game.js?v=mobile-v3"></script>
 </head>
 <body>
   <div id="app" class="app-shell">
@@ -33,7 +33,7 @@
         <div class="window-bar">
           <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
           <span>NERDDESK MOBILE // ACME</span>
-          <button id="start-mute" class="icon-button" type="button" aria-label="Ton ausschalten" title="Ton umschalten">🔊</button>
+          <button id="start-mute" class="icon-button" type="button" aria-label="Ton ausschalten" title="Ton umschalten">SFX</button>
         </div>
         <div class="boot-content">
           <p class="eyebrow">PERSONALAKTE #09–17 · ERSTER ARBEITSTAG</p>
@@ -77,14 +77,14 @@
         </div>
 
         <div class="resource resource-coffee">
-          <div class="resource-label"><span>☕ KAFFEE</span><output id="coffee-value">100</output></div>
+          <div class="resource-label"><span>CAFFEINE</span><output id="coffee-value">100</output></div>
           <div class="meter" role="progressbar" aria-label="Kaffee-Level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
             <i id="coffee-bar"></i>
           </div>
         </div>
 
         <div class="resource resource-patience">
-          <div class="resource-label"><span>😡 BRUMM</span><output id="patience-value">100</output></div>
+          <div class="resource-label"><span>BRUMM</span><output id="patience-value">100</output></div>
           <div class="meter" role="progressbar" aria-label="Boss-Geduld" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
             <i id="patience-bar"></i>
           </div>
@@ -95,7 +95,7 @@
           <small id="quest-counter">0/10 GELÖST</small>
         </div>
 
-        <button id="hud-mute" class="icon-button hud-button" type="button" aria-label="Ton ausschalten" title="Ton umschalten">🔊</button>
+        <button id="hud-mute" class="icon-button hud-button" type="button" aria-label="Ton ausschalten" title="Ton umschalten">SFX</button>
       </header>
 
       <main id="main-stage" class="main-stage" tabindex="-1"></main>
@@ -113,7 +113,7 @@
         <div class="dialogue-row">
           <div class="portrait-frame large">
             <canvas id="dialogue-portrait" data-character="brumm" data-mood="neutral" aria-hidden="true"></canvas>
-            <span id="dialogue-mood" class="mood-badge">😐</span>
+            <span id="dialogue-mood" class="mood-badge">--</span>
           </div>
           <div id="dialogue-bubble" class="speech-bubble">
             <strong id="dialogue-name">CHEF BRUMM</strong>

@@ -1,49 +1,57 @@
-https://florianalternativ-cmyk.github.io/IT-Gamev2/
+# IT-SURVIVAL — Mobile Edition V3
 
+Ein vollständiges, statisches Mobile-Browsergame im Retro-Pixelstil. Keine Installation, kein Build-Schritt und keine externen Abhängigkeiten: `index.html` enthält das komplette Spiel.
 
-# IT-SURVIVAL — Mobile Edition V2
+## Neues GitHub-Repository veröffentlichen
 
-Diese Version ist konsequent für Smartphones im Hochformat gebaut. Die veröffentlichte `index.html` ist vollständig selbstständig: CSS, Pixel-Art und JavaScript sind direkt eingebettet. Dadurch kann das Spiel nicht mehr wegen fehlender oder veralteter `style.css`-/JavaScript-Dateien auf der Startseite hängen bleiben.
+### Variante A — direkt im Browser
 
-## Schnellste Veröffentlichung
+1. Auf GitHub ein **neues leeres Repository** anlegen.
+2. Alle Dateien aus diesem Paket einschließlich `.github` und `.nojekyll` direkt in die oberste Ebene hochladen.
+3. Unter **Settings → Pages → Build and deployment** als Source **GitHub Actions** auswählen.
+4. Den Workflow **Deploy IT-SURVIVAL to GitHub Pages** ausführen lassen.
+5. Die veröffentlichte URL steht anschließend im Workflow und unter Settings → Pages.
 
-1. Öffne dein GitHub-Pages-Repository.
-2. Ersetze die vorhandene **`index.html` im Repository-Hauptverzeichnis** durch die neue `index.html`.
-3. Committe die Änderung und warte kurz auf GitHub Pages.
-4. Öffne die Seite einmal mit `?v=mobile-v2`, beispielsweise `https://alternativ-cmyk.github.io/?v=mobile-v2`.
+### Variante B — mit Git
 
-Nur `index.html` ist zum Spielen erforderlich. Das ZIP enthält zusätzlich die lesbaren Quelldateien.
+```bash
+git init
+git add .
+git commit -m "Initial IT-SURVIVAL Mobile V3"
+git branch -M main
+git remote add origin https://github.com/DEIN-NAME/DEIN-REPO.git
+git push -u origin main
+```
 
-## Wichtig
+Danach in GitHub Pages als Source **GitHub Actions** wählen. Bei einem normalen Projekt-Repository lautet die URL typischerweise `https://DEIN-NAME.github.io/DEIN-REPO/`.
 
-- Die Dateien aus dem ZIP liegen bereits auf der obersten Ebene. **Keinen zusätzlichen Unterordner** in das Repository hochladen.
-- Wenn weiterhin die alte grüne, unformatierte Seite erscheint, wird noch eine alte `index.html` ausgeliefert. Prüfe Branch/Ordner in den GitHub-Pages-Einstellungen und lade die Seite danach im Inkognito-Modus.
-- Auf dem korrekten Startscreen steht in der Terminalzeile: `touch.ready = true`.
+## Was Mobile V3 ändert
 
-## Mobile Änderungen
+- Kaffee sinkt nur noch um **1 Punkt alle 6 Sekunden** und pausiert in Dialogen.
+- Nach einer gelösten Aufgabe kommt die nächste variabel nach **3–8 Sekunden**; optional sofort über „NÄCHSTES TICKET JETZT“.
+- Der Router-Blinktest startet erst nach eigenem Touch und besitzt einen 3-2-1-Countdown.
+- HDMI und USB wurden als detaillierte Retro-Hardware neu gezeichnet.
+- Anschlüsse funktionieren per Touch-Auswahl oder Drag.
+- Typische UI-Emojis wurden durch Textcodes und eigene Pixel-Icons ersetzt.
+- Die komplette Website bleibt touch-first und für Smartphone-Hochformat optimiert.
 
-- feste Hochformat-App mit maximal 480 px Breite
-- Smartphone-Layout auch auf großen Bildschirmen
-- kompakter Touch-HUD mit Kaffee, Brumm, Uhr und Ton
-- einspaltiges Quest-Board
-- Touch-Ziele ab 52 px
-- direkter Start über `pointerup`, `touchend` und Click-Fallback
-- Startbutton mit sichtbarer Lade-/Fehlerdiagnose
-- keine Maus-Hinweise mehr in der Oberfläche
-- kontrolliertes Scrollen nur innerhalb von Board und Minigame-Panel
-- Safe-Area-Unterstützung für Geräte mit Notch
-- selbstständige `index.html` ohne externe Requests
-
-## Quelldateien
+## Repository-Struktur
 
 ```text
-index.html          # fertige selbstständige GitHub-Pages-Datei
-index.source.html   # ungebündelte Quellfassung
-style.css           # Mobile-V2-Styles
-characters.js       # Pixelportraits
-story.js            # Story und Quests
-minigames.js        # Minigames
-game.js             # State-Machine und Touch-Start
-QA.md               # Testprotokoll
-DEPLOY-MOBILE.txt   # Kurz-Anleitung
+.github/workflows/deploy-pages.yml  Automatisches GitHub-Pages-Deployment
+.nojekyll                           Statische Dateien unverändert ausliefern
+index.html                          Fertige selbstständige Website
+index.source.html                   Lesbare ungebündelte HTML-Fassung
+style.css                           Styles und Retro-Hardwaregrafik
+characters.js                      Pixelportraits
+story.js                           Story und Quests
+minigames.js                       Minigames
+game.js                            State-Machine und Scheduler
+QA.md                              Testprotokoll
+REPO-SETUP.md                      Ausführliche Veröffentlichung
+VERSION.txt                        Build-Information
 ```
+
+## Lokaler Test
+
+`index.html` kann direkt im Browser geöffnet werden. Es sind kein Webserver und kein Paketmanager erforderlich.
